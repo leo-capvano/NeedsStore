@@ -27,35 +27,41 @@
     ArrayList<Articolo> articoli = (ArrayList<Articolo>) session.getAttribute("articoli");
   %>
 
-    <%for (Articolo a:articoli) {
-        if (a.getEmail_acq()==null){%>
-        <!-- 1article area  -->
-        <div class="about_area">
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-xl-5 col-md-6">
-                <div>
-                  <img class="img-fluid" src="images/img3.jpg" alt="">
-                </div>
+  <div class="container">
+    <form action="toAddannuncio" method="post">
+      <button type="submit" class="btn btn-outline-success btn-lg btn-block">INSERISCI ANNUNCIO</button>
+    </form>
+  </div>
+
+  <%for (Articolo a:articoli) {
+      if (a.getEmail_acq()==null){%>
+      <!-- 1article area  -->
+      <div class="about_area">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-xl-5 col-md-6">
+              <div>
+                <img class="img-fluid" src="images/img3.jpg" alt="">
               </div>
-              <div class="col-xl-7 col-md-6">
+            </div>
+            <div class="col-xl-7 col-md-6">
+              <div>
+                <h3><%=a.getTitolo()%></h3>
+                <p class="font-weight-bold"><%=a.getPrezzo()%> euro</p><br>
+                <label>Venduto a </label>
+                <p class="font-weight-bold"><%=a.getLuogo()%></p>
                 <div>
-                  <h3><%=a.getTitolo()%></h3>
-                  <p class="font-weight-bold"><%=a.getPrezzo()%> euro</p><br>
-                  <label>Venduto a </label>
-                  <p class="font-weight-bold"><%=a.getLuogo()%></p>
-                  <div>
-                    <form class="form-inline">
-                      <button class="btn btn-outline-dark">Acquista</button>
-                    </form>
-                  </div>
+                  <form class="form-inline">
+                    <button class="btn btn-outline-dark">Acquista</button>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <hr>
-    <%}}%>
+      </div>
+      <hr>
+  <%}}%>
 
 
 
