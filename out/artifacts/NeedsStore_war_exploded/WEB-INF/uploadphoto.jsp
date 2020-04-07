@@ -12,16 +12,19 @@
 </head>
 <body>
 <div class="container">
-    <div class="card" style="width: 18rem;">
+    <div class="card my-3 mx-auto" style="width: 20rem;">
         <img class="card-img-top" src="images/img1.jpg" alt="Card image cap">
         <div class="card-body">
             <p class="card-text">Carica la foto</p>
         </div>
     </div>
-    <form>
+    <form action="UploadImage" method="post" enctype="multipart/form-data">
         <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFile">
+            <input type="file" name="fileuploaded" class="custom-file-input" id="customFile">
             <label class="custom-file-label" for="customFile">Carica foto</label>
+        </div>
+        <div class="my-3 mx-auto">
+            <button class="btn btn-outline-success" type="submit">AVANTI</button>
         </div>
     </form>
 </div>

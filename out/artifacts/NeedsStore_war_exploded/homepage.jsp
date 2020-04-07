@@ -1,6 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Articolo" %>
-<%@ page import="model.Utente" %><%--
+<%@ page import="model.Utente" %>
+<%@ page import="model.ArticoloDAO" %><%--
   Created by IntelliJ IDEA.
   User: leoca
   Date: 02/04/2020
@@ -24,7 +25,10 @@
 
   <body>
   <%
-    ArrayList<Articolo> articoli = (ArrayList<Articolo>) session.getAttribute("articoli");
+    //carica il catalogo di articoli
+    ArticoloDAO adao = new ArticoloDAO();
+    ArrayList<Articolo> articoli = adao.doRetrieveNonVenduti();
+    session.setAttribute("articoli",articoli);
   %>
 
   <div class="container">
@@ -33,8 +37,7 @@
     </form>
   </div>
 
-  <%for (Articolo a:articoli) {
-      if (a.getEmail_acq()==null){%>
+  <%for (Articolo a:articoli) {%>
       <!-- 1article area  -->
       <div class="about_area">
         <div class="container">
@@ -61,7 +64,7 @@
         </div>
       </div>
       <hr>
-  <%}}%>
+  <%}%>
 
 
 

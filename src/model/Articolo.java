@@ -2,21 +2,19 @@ package model;
 
 public class Articolo {
 
+    private String idArticolo;
     private String titolo;
-    private String email_vend;
-    private String email_acq;
     private String descrizione;
+    private String email_vend;
     private Double prezzo;
     private String luogo;
 
+    public String getIdArticolo() {
+        return idArticolo;
+    }
 
-    public Articolo(String titolo, String email_vend, String email_acq, String descrizione, Double prezzo, String luogo) {
-        this.titolo = titolo;
-        this.email_vend = email_vend;
-        this.email_acq = email_acq;
-        this.descrizione = descrizione;
-        this.prezzo = prezzo;
-        this.luogo = luogo;
+    public void setIdArticolo(String idArticolo) {
+        this.idArticolo = idArticolo;
     }
 
     public String getTitolo() {
@@ -27,28 +25,20 @@ public class Articolo {
         this.titolo = titolo;
     }
 
-    public String getEmail_vend() {
-        return email_vend;
-    }
-
-    public void setEmail_vend(String email_vend) {
-        this.email_vend = email_vend;
-    }
-
-    public String getEmail_acq() {
-        return email_acq;
-    }
-
-    public void setEmail_acq(String email_acq) {
-        this.email_acq = email_acq;
-    }
-
     public String getDescrizione() {
         return descrizione;
     }
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+
+    public String getEmail_vend() {
+        return email_vend;
+    }
+
+    public void setEmail_vend(String email_vend) {
+        this.email_vend = email_vend;
     }
 
     public Double getPrezzo() {
@@ -64,6 +54,15 @@ public class Articolo {
     }
 
     public void setLuogo(String luogo) {
+        this.luogo = luogo;
+    }
+
+    public Articolo(String idArticolo, String titolo, String descrizione, String email_vend, Double prezzo, String luogo) {
+        this.idArticolo = idArticolo;
+        this.titolo = titolo;
+        this.descrizione = descrizione;
+        this.email_vend = email_vend;
+        this.prezzo = prezzo;
         this.luogo = luogo;
     }
 }

@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/toAddannuncio")
@@ -17,7 +18,13 @@ public class toAddannuncio extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/addannuncio.jsp");
-        dispatcher.forward(req,resp);
+
+        HttpSession session = req.getSession();
+        if (session.getAttribute("utenteLoggato")!=null){
+            RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/addannuncio.jsp");
+            dispatcher.forward(req,resp);
+        }else{
+            //usr non autorizzato ad accedere, devi loggarti
+        }
     }
 }
