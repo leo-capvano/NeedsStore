@@ -34,13 +34,15 @@ public class UploadImage extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String filePath = "";
+        String filename = "";
         if(ServletFileUpload.isMultipartContent(req)){
             try {
                 ServletFileUpload sf = new ServletFileUpload(new DiskFileItemFactory());
                 List<FileItem> items = sf.parseRequest(req);
 
                 for (FileItem item : items){
-                    filePath = "C:\\Users\\leoca\\IdeaProjects\\NeedsStore\\web\\images\\"+item.getName();
+                    filename = item.getName();
+                    filePath = "C:\\Users\\leoca\\IdeaProjects\\NeedsStore\\web\\images\\"+filename;
                     item.write(new File(filePath));
                 }
             } catch (FileUploadException e) {
@@ -52,7 +54,7 @@ public class UploadImage extends HttpServlet {
 
         Articolo newArticolo = (Articolo) req.getSession().getAttribute("newArticolo");
 
-        Album album = new Album(UUID.randomUUID().toString(),filePath,newArticolo.getIdArticolo());
+        Album album = new Album(UUID.randomUUID().toString(),"images\\"+filename,newArticolo.getIdArticolo());
 
         ArticoloDAO ardao = new ArticoloDAO();
         AlbumDAO aldao = new AlbumDAO();

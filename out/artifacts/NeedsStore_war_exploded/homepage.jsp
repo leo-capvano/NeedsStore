@@ -1,7 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Articolo" %>
-<%@ page import="model.Utente" %>
-<%@ page import="model.ArticoloDAO" %><%--
+<%@ page import="model.*" %><%--
   Created by IntelliJ IDEA.
   User: leoca
   Date: 02/04/2020
@@ -27,8 +25,10 @@
   <%
     //carica il catalogo di articoli
     ArticoloDAO adao = new ArticoloDAO();
+    AlbumDAO albumDAO = new AlbumDAO();
     ArrayList<Articolo> articoli = adao.doRetrieveNonVenduti();
     session.setAttribute("articoli",articoli);
+    ArrayList<Album> album = new ArrayList<>();
   %>
 
   <div class="container">
@@ -37,14 +37,19 @@
     </form>
   </div>
 
-  <%for (Articolo a:articoli) {%>
+  <%for (Articolo a:articoli) {
+      album = albumDAO.doRetrieveByArticolo(a);%>
       <!-- 1article area  -->
       <div class="about_area">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-xl-5 col-md-6">
               <div>
-                <img class="img-fluid" src="images/img3.jpg" alt="">
+                <%if(album.size()>0){%>
+                  <img class="img-fluid" src="<%=album.get(0).getPath()%>" alt="">
+                <%}else{%>
+                  <img class="img-fluid" src="images/img1.jpg" alt="">
+                <%}%>
               </div>
             </div>
             <div class="col-xl-7 col-md-6">
