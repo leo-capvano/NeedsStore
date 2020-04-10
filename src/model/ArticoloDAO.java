@@ -27,6 +27,45 @@ public class ArticoloDAO {
         }
     }
 
+    public ArrayList<Articolo> doRetrieveNonVendutiFromIndex(int index){
+        ArrayList<Articolo> articoli = new ArrayList<Articolo>();
+        int i = 0;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select * from articoli where idArticolo not in " +
+                    "(select idArticolo from acquisti)");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                if (i>=index){
+                    articoli.add(new Articolo(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),
+                            resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6)));
+                }
+                i++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return articoli;
+    }
+
+    public ArrayList<Articolo> doRetrieveNonVendutiTen(){
+        ArrayList<Articolo> articoli = new ArrayList<Articolo>();
+        int i = 0;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select * from articoli where idArticolo not in " +
+                    "(select idArticolo from acquisti)");
+            ResultSet resultSet = statement.executeQuery();
+            while ((resultSet.next())&&(i<10)){
+                articoli.add(new Articolo(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),
+                        resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6)));
+                i++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return articoli;
+    }
 
     public ArrayList<Articolo> doRetrieveNonVenduti(){
         ArrayList<Articolo> articoli = new ArrayList<Articolo>();

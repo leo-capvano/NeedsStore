@@ -26,7 +26,8 @@
     //carica il catalogo di articoli
     ArticoloDAO adao = new ArticoloDAO();
     AlbumDAO albumDAO = new AlbumDAO();
-    ArrayList<Articolo> articoli = adao.doRetrieveNonVenduti();
+    ArrayList<Articolo> articoli = adao.doRetrieveNonVendutiTen();
+    int index = 10;
     session.setAttribute("articoli",articoli);
     ArrayList<Album> album = new ArrayList<>();
   %>
@@ -41,8 +42,8 @@
       album = albumDAO.doRetrieveByArticolo(a);%>
       <!-- 1article area  -->
       <div class="about_area">
-        <div class="container">
-          <div class="row align-items-center">
+        <div class="container" id="contenitoreArticoli">
+          <div class="row align-items-center" id="rigaArticolo">
             <div class="col-xl-5 col-md-6">
               <div>
                 <%if(album.size()>0){%>
@@ -70,7 +71,38 @@
       </div>
       <hr>
   <%}%>
+  <div class="container-fluid mx-auto">
+    <button id="btnLoadMore" onclick="loadmore()" class="btn btn-success">Carica altri articoli</button>
+  </div>
 
+  <script>
+    function loadmore(){
+      var rigaArticolo = document.getElementById(rigaArticolo);
+      var ajax = new XMLHttpRequest();
+      console.log("dentro")
+
+      ajax.onreadystatechange = function (){
+        if (ajax.readyState == 4 && ajax.status == 200){
+          var newItems = JSON.parse(ajax.responseText)
+          console.log("items"+newItems);
+          for (i = 0; newItems.length; i++){
+            var riga = document.createElement("div");
+            riga.className="row align-items-center";
+            var divFoto = document.createElement("div");
+            divFoto.className = "col-xl-5 col-md-6";
+            var divArt = document.createElement("div");
+            divArt.className = "col-xl-7 col-md-6";
+
+          }
+        }
+      }
+
+      ajax.open("GET","LoadMore?index=<%=index%>",true);
+      <%index+=10;%>
+      ajax.send();
+
+    }
+  </script>
 
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
