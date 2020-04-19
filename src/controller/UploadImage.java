@@ -44,6 +44,7 @@ public class UploadImage extends HttpServlet {
                     filename = item.getName();
                     filePath = "C:\\Users\\leoca\\IdeaProjects\\NeedsStore\\web\\images\\"+filename;
                     item.write(new File(filePath));
+                    System.out.println(filename);
                 }
             } catch (FileUploadException e) {
                 e.printStackTrace();

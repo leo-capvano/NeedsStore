@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @WebServlet("/toUploadphoto")
@@ -25,7 +26,8 @@ public class toUploadphoto extends HttpServlet {
         Double prezzo = Double.parseDouble(req.getParameter("prezzo"));
         Utente utenteLoggato = (Utente) req.getSession().getAttribute("utenteLoggato");
         String email_vend = utenteLoggato.getEmail();
-        Articolo newArticolo = new Articolo(idArticolo,titolo,descrizione,email_vend,prezzo,luogo);
+        LocalDate data_inserimento = LocalDate.now();
+        Articolo newArticolo = new Articolo(idArticolo,titolo,descrizione,email_vend,prezzo,luogo,data_inserimento.toString());
 
         HttpSession session = req.getSession();
         synchronized (session){

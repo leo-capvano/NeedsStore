@@ -1,12 +1,26 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.swing.plaf.nimbus.State;
+import java.sql.*;
 
 public class UtenteDAO {
 
+    public Utente doRetrieveByEmail(String email){
+        Utente u = null;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select * from utenti where email = ?");
+            statement.setString(1,email);
+            ResultSet r = statement.executeQuery();
+            if (r.next()){
+                u = new Utente(r.getString(1),r.getString(2),r.getString(3),r.getString(4),
+                        r.getString(5),r.getBoolean(6));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return u;
+    }
 
     public void doRegister(Utente u){
         try {

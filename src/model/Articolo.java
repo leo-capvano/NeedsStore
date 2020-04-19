@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Articolo {
 
     private String idArticolo;
@@ -8,6 +10,15 @@ public class Articolo {
     private String email_vend;
     private Double prezzo;
     private String luogo;
+    private String data_inserimento;
+
+    public String getData_inserimento() {
+        return data_inserimento;
+    }
+
+    public void setData_inserimento(String data_inserimento) {
+        this.data_inserimento = data_inserimento;
+    }
 
     public String getIdArticolo() {
         return idArticolo;
@@ -57,12 +68,13 @@ public class Articolo {
         this.luogo = luogo;
     }
 
-    public Articolo(String idArticolo, String titolo, String descrizione, String email_vend, Double prezzo, String luogo) {
+    public Articolo(String idArticolo, String titolo, String descrizione, String email_vend, Double prezzo, String luogo, String data_inserimento) {
         this.idArticolo = idArticolo;
         this.titolo = titolo;
         this.descrizione = descrizione;
         this.email_vend = email_vend;
         this.prezzo = prezzo;
         this.luogo = luogo;
+        this.data_inserimento = data_inserimento;
     }
 }
