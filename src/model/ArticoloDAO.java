@@ -9,6 +9,23 @@ import java.util.ArrayList;
 
 public class ArticoloDAO {
 
+    public ArrayList<Articolo> doRetrieveByTitolo(String titolo, int limit){
+        ArrayList<Articolo> articoli = new ArrayList<>();
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement statement = conn.prepareStatement("select * from articoli where idArticolo not in " +
+                    "(select idArticolo from acquisti) and titolo like '"+titolo+"%' order by data_inserimento desc limit "+limit);
+            ResultSet r = statement.executeQuery();
+            while (r.next()){
+                articoli.add(new Articolo(r.getString(1),r.getString(2),r.getString(3),
+                        r.getString(4),r.getDouble(5),r.getString(6),r.getString(7)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return articoli;
+    }
+
 
     public void doPublish(Articolo a){
         try {
@@ -28,6 +45,25 @@ public class ArticoloDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Articolo> doRetrieve(int l, int offset){
+        ArrayList<Articolo> articoli = new ArrayList<Articolo>();
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select * from articoli where idArticolo not in " +
+                    "(select idArticolo from acquisti) order by data_inserimento desc limit ? offset ?");
+            statement.setInt(1, l);
+            statement.setInt(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                    articoli.add(new Articolo(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),
+                            resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6),resultSet.getString(7)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return articoli;
     }
 
     public ArrayList<Articolo> doRetrieveNonVendutiTenFromIndex(int index){

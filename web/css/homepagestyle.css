@@ -1,0 +1,41 @@
+body{
+    font-family: sans-serif;
+}
+
+
+#btnInserisci{
+    width: 100%;
+    color: #1e7e34;
+    border-color: #1e7e34;
+    font-weight: bold;
+}
+
+
+
+.container{
+    margin-left: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.container100{
+    margin: 0 20px;
+}
+
+.riga{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.titolo{
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.luogo{
+    text-transform: capitalize;
+}

@@ -1,0 +1,253 @@
+body{
+    font-family: sans-serif;
+}
+
+nav{
+    text-align: right;
+    line-height: 70px;
+}
+
+.menu{
+    margin: 0 20px 0 0;
+}
+
+button.btnGo{
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 7px;
+    background-color: transparent;
+    border-color: black;
+}
+
+button.btnGoSecondary{
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 7px;
+    background-color: transparent;
+    border-color: black;
+    margin-top: 0;
+}
+
+.menu button{
+    margin: 0 5px;
+    align-items: baseline;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 7px;
+    border-color: #1e7e34;
+    background-color: transparent;
+    font-family: sans-serif;
+}
+
+button:hover{
+    background-color: #20c997;
+    transition: background-color 500ms;
+}
+
+.menu button.navBtn{
+    border-color: black;
+}
+
+#brand{
+    float: left;
+    color: black;
+    font-size: 26px;
+    margin-left: 20px;
+}
+
+a{
+    text-decoration: none;
+    font-family: sans-serif;
+    color: black;
+}
+
+label{
+    font-size: 26px;
+    display: none;
+}
+
+#toggle{
+    display: none;
+}
+
+form.inlineForm{
+    display: inline;
+}
+
+.pageTitle{
+    display: flex;
+    justify-content: center;
+}
+
+.pageTitle h1{
+    margin-bottom: 130px;
+}
+
+.rowDiv{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+
+.glow:hover{
+    background-color: #20c997;
+    transition: background-color 500ms;
+}
+
+.chapterTitle{
+    font-weight: bold;
+    font-size: 26px;
+    letter-spacing: 2px;
+}
+
+.space-bt{
+    justify-content: space-between;
+}
+
+.colDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+.start{
+    justify-content: flex-start;
+}
+
+
+form.verticalForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+form.verticalForm input, .inputText{
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 400px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: grey;
+}
+
+input.focusOutline:focus{
+    outline-color: #20c997;
+}
+
+.divError{
+    display: flex;
+    justify-content: center;
+    background-color: rgba(204, 32, 40, 0.62);
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: rgba(222,31,40,0.85);
+    line-height: 70px;
+}
+
+.divError p{
+    font-weight: lighter;
+}
+
+.loginContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.m10{
+    margin: 10px;
+}
+
+.mg-top-30{
+    margin-top: 30px;
+}
+
+.mg-right-30{
+    margin-right: 30px;
+}
+
+.pad10{
+    padding: 10px;
+}
+
+.wrap{
+    flex-wrap: wrap;
+}
+
+.centerDiv{
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
+img.imgSquare{
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    background: rgb(107,149,149);
+    margin: 10px 0;
+}
+
+.galleryPic{
+    display: none;
+}
+
+a.prec, a.succ {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+@media only screen and (max-width: 800px){
+    label{
+        display: block;
+        cursor: pointer;
+    }
+    .menu{
+        visibility: hidden;
+        opacity: 0;
+        height: 0px;
+    }
+    .menu button{
+        display: block;
+        width: 100%;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 7px;
+        border-color: #1e7e34;
+        background-color: transparent;
+        margin-top: 5px;
+    }
+    .menu button.navBtn{
+        border-color: black;
+    }
+    #toggle:checked + .menu{
+        visibility: visible;
+        opacity: 1;
+        height: 140px;
+        transition: visibility, opacity, height 1s;
+    }
+
+    #brand{
+        font-size: 20px;
+    }
+
+    form.verticalForm input{
+        width: 200px;
+    }
+    .pageTitle{
+        font-size: 10px;
+    }
+
+}

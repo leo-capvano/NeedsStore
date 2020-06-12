@@ -20,7 +20,7 @@
     </div>
     <form action="UploadImage" method="post" enctype="multipart/form-data">
         <div class="custom-file">
-            <input type="file" name="fileuploaded" class="custom-file-input" id="customFile" multiple="multiple">
+            <input type="file" name="fileuploaded" class="custom-file-input" id="customFile" multiple>
             <label class="custom-file-label" for="customFile">Carica foto</label>
         </div>
         <div class="my-3 mx-auto">

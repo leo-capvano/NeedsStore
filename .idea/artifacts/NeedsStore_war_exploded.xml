@@ -15,6 +15,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/web/lib/commons-fileupload-1.4.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/lib/commons-io-2.6.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/lib/gson-2.8.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/lib/javax.mail.jar" />
         </element>
       </element>
     </root>

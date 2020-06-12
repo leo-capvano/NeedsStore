@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -35,16 +37,21 @@ public class UploadImage extends HttpServlet {
 
         String filePath = "";
         String filename = "";
+        List<FileItem> items = new ArrayList<FileItem>();
+        ArrayList<String> filenames = new ArrayList<>();
+        InputStream in = null;
+        File uploadPath = new File("C:\\Users\\leoca\\Desktop\\immagini");
         if(ServletFileUpload.isMultipartContent(req)){
             try {
                 ServletFileUpload sf = new ServletFileUpload(new DiskFileItemFactory());
-                List<FileItem> items = sf.parseRequest(req);
+                items = sf.parseRequest(req);
 
                 for (FileItem item : items){
-                    filename = item.getName();
-                    filePath = "C:\\Users\\leoca\\IdeaProjects\\NeedsStore\\web\\images\\"+filename;
-                    item.write(new File(filePath));
-                    System.out.println(filename);
+                    filename = ((int)(Math.random()*1000))+item.getName();
+                    in = item.getInputStream();
+                    File newFile = new File(uploadPath, filename);
+                    Files.copy(in,newFile.toPath());
+                    filenames.add(filename);
                 }
             } catch (FileUploadException e) {
                 e.printStackTrace();
@@ -55,12 +62,16 @@ public class UploadImage extends HttpServlet {
 
         Articolo newArticolo = (Articolo) req.getSession().getAttribute("newArticolo");
 
-        Album album = new Album(UUID.randomUUID().toString(),"images\\"+filename,newArticolo.getIdArticolo());
-
+        //scrivi l'articolo nel db
         ArticoloDAO ardao = new ArticoloDAO();
-        AlbumDAO aldao = new AlbumDAO();
         ardao.doPublish(newArticolo);
-        aldao.doInsertAlbum(album);
+
+        //creare e scrivere tanti album per quanti sono gli items(foto caricate)
+        for (int i=0; i<filenames.size(); i++){
+            AlbumDAO aldao = new AlbumDAO();
+            Album album = new Album(UUID.randomUUID().toString(),"/immagini/"+filenames.get(i),newArticolo.getIdArticolo());
+            aldao.doInsertAlbum(album);
+        }
 
         //articolo pubblicato
         resp.sendRedirect("homepage.jsp");

@@ -22,7 +22,7 @@ public class LoadMore extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int index = Integer.parseInt(req.getParameter("index"));
         ArticoloDAO ardao = new ArticoloDAO();
-        List<Articolo> articoli = ardao.doRetrieveNonVendutiTenFromIndex(index);
+        List<Articolo> articoli = ardao.doRetrieve(10,index);
         if (articoli.size()==0){
             articoli.add(new Articolo("empty","empty","empty","empty",1.0,"empty","empty"));
         }
