@@ -25,6 +25,9 @@ public class toAddannuncio extends HttpServlet {
             dispatcher.forward(req,resp);
         }else{
             //usr non autorizzato ad accedere, devi loggarti
+            RequestDispatcher dispatcher = req.getRequestDispatcher("homepage.jsp");
+            req.setAttribute("error","Devi loggarti per poter inserire un annuncio!");
+            dispatcher.forward(req,resp);
         }
     }
 }

@@ -9,31 +9,40 @@
 <html>
 <head>
     <title>Aggiungi Foto</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css">
 </head>
 <body>
-<div class="container">
-    <div class="card my-3 mx-auto" style="width: 20rem;">
-        <img class="card-img-top" src="images/img1.jpg" alt="Card image cap">
-        <div class="card-body">
-            <p class="card-text">Carica la foto</p>
-        </div>
-    </div>
+
+<jsp:include page="headerLogged.jsp"></jsp:include>
+
+
+<div class="chapterTitle centerDiv">
+    <p>Carica delle foto dell'articolo</p>
+</div>
+
+<div class="rowDiv centerDiv">
     <form action="UploadImage" method="post" enctype="multipart/form-data">
-        <div class="custom-file">
-            <input type="file" name="fileuploaded" class="custom-file-input" id="customFile" multiple>
-            <label class="custom-file-label" for="customFile">Carica foto</label>
+        <div class="divFileWrapper mg-bottom-20" style="z-index: 0;">
+            <input type="file" name="fileuploaded" style="z-index: 2;position: relative;top: 15px;" class="inputFile" id="fileuploaded" multiple>
+            <p class="pFileLoadLabel" style="z-index: 1;">CARICA FOTO</p>
         </div>
-        <div class="my-3 mx-auto">
-            <button class="btn btn-outline-success" type="submit">AVANTI</button>
+        <div class="rowDiv">
+            <button class="btnGo" type="submit">AVANTI</button>
         </div>
     </form>
+    <div class="rowDiv m20">
+        <span id="total" class="spancounter">0</span>
+    </div>
 </div>
 
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-
 </body>
+<script>
+
+    $("#fileuploaded").change(function () {
+        $("#total").html($("#fileuploaded")[0].files.length)
+    })
+
+</script>
 </html>

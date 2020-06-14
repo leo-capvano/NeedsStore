@@ -5,6 +5,8 @@ body{
 nav{
     text-align: right;
     line-height: 70px;
+    background-color: rgba(211,207,212,0.85);
+    border-radius: 4px;
 }
 
 .menu{
@@ -57,7 +59,6 @@ button:hover{
 
 a{
     text-decoration: none;
-    font-family: sans-serif;
     color: black;
 }
 
@@ -132,8 +133,14 @@ form.verticalForm input, .inputText{
     border-color: grey;
 }
 
-input.focusOutline:focus{
+.focusOutline:focus{
     outline-color: #20c997;
+}
+
+select{
+    border: 1px solid;
+    border-radius: 7px;
+    border-color: rgba(184,180,185,0.85);
 }
 
 .divError{
@@ -159,12 +166,24 @@ input.focusOutline:focus{
     margin: 10px;
 }
 
+.m20{
+    margin: 20px;
+}
+
 .mg-top-30{
     margin-top: 30px;
 }
 
 .mg-right-30{
     margin-right: 30px;
+}
+
+.mg-left-30{
+    margin-left: 30px;
+}
+
+.mg-bottom-20{
+    margin-bottom: 30px;
 }
 
 .pad10{
@@ -190,23 +209,89 @@ img.imgSquare{
     margin: 10px 0;
 }
 
-.galleryPic{
-    display: none;
-}
-
 a.prec, a.succ {
     cursor: pointer;
-    position: absolute;
-    top: 50%;
     width: auto;
-    margin-top: -22px;
     padding: 16px;
-    color: white;
     font-weight: bold;
     font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
+}
+
+
+.baseline{
+    align-items: baseline;
+}
+
+/* Fading animation */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+.separatorTitle + div{
+    position: relative;
+    bottom: 50px;
+}
+
+.separatorTitle p{
+    font-weight: lighter;
+    text-transform: capitalize;
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+.zindex1{
+    z-index: 1;
+}
+
+.zindex0{
+    z-index: 0;
+}
+
+.w-max{
+    width: 100%;
+}
+
+.inputFile{
+    padding: 10px;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.divFileWrapper{
+    background-color: #20c997;
+    border-radius: 5px;
+}
+
+.pFileLoadLabel{
+    position: relative;
+    bottom: 50px;
+    bottom: 30px;
+    margin-left: 80px;
+}
+
+.spancounter{
+    background-color: #20c997;
+    border-radius: 50px;
+    padding: 5px;
+}
+
+#total{
+    position: relative;
+    top: 42px;
+    right: 10px;
 }
 
 @media only screen and (max-width: 800px){
@@ -248,6 +333,20 @@ a.prec, a.succ {
     }
     .pageTitle{
         font-size: 10px;
+    }
+
+    #contatti{
+        justify-content: flex-start;
+        margin-left: 5px;
+    }
+    #galleryPic{
+        justify-content: flex-start;
+    }
+    #navigationButtons{
+        justify-content: flex-start;
+    }
+    .chapterTitle{
+        font-size: 17px;
     }
 
 }

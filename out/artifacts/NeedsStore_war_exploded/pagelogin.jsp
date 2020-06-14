@@ -22,11 +22,11 @@
 </div>
 
 <div class="rowDiv">
-    <div class="loginContainer">
+    <div class="loginContainer" id="formContainer">
         <form action="login" method="post" class="verticalForm">
-            <input name="email" type="text" class="focusOutline" placeholder="Email">
-            <input name="pwd" type="password" class="focusOutline" placeholder="Password">
-            <button type="submit" class="btnGo">Accedi</button>
+            <input id="email" name="email" type="email" class="focusOutline" placeholder="Email">
+            <input id="pwd" name="pwd" type="password" class="focusOutline" placeholder="Password">
+            <button type="submit" class="btnGo" id="btnAccedi">Accedi</button>
         </form>
         <%if (errorLogin!=null){%>
         <div class="divError">
@@ -39,6 +39,11 @@
 
 <link rel="stylesheet" type="text/css" href="css/mystyle.css">
 <link rel="stylesheet" type="text/css" href="css/loginStyle.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </body>
+
+<script>
+
+</script>
 </html>

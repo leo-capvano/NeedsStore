@@ -15,38 +15,50 @@
 <jsp:include page="WEB-INF/header.jsp"></jsp:include>
 
 <div class="pageTitle">
-    <h1 class="my-3" align="center">Registrati</h1>
+    <h1 style="margin-bottom: 30px;">Registrati</h1>
+</div>
+
+<div class="rowDiv divError mg-bottom-20" id="div-error">
+    <p id="error-message"></p>
 </div>
 
 <div class="container">
-    <form method="post" action="registration-servlet" class="verticalForm">
-        <div class="rowDiv">
-            <input type="text" class="form-control" name="nome" placeholder="Nome">
-            <input type="text" class="form-control" name="cognome" placeholder="Cognome">
+    <form method="post" action="registration-servlet" class="verticalForm" id="registrationForm">
+        <div class="rowDiv wrap">
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+            <input type="text" class="form-control" id="cognome" name="cognome" placeholder="Cognome">
         </div>
-        <div class="rowDiv">
-            <input type="text" class="form-control" name="email1" placeholder="Email">
-            <input type="text" class="form-control" name="email2" placeholder="Conferma email">
+        <div class="rowDiv wrap">
+            <input type="text" class="form-control" id="email1" name="email1" placeholder="Email">
+            <input type="text" class="form-control" id="email2" name="email2" placeholder="Conferma email">
         </div>
         <div class="colDiv">
             <div class="rowDiv">
-                <button class="btnGoSecondary m10" type="button" id="button-addon1" onclick="showpwd()">Mostra password</button>
+                <button class="btnGoSecondary m10" type="button" onclick="showpwd()">Mostra password</button>
                 <input type="password" id="pwd1" name="pwd1" placeholder="Password">
             </div>
             <div class="rowDiv">
-                <button class="btnGoSecondary m10" type="button" onclick="showpwd()" id="button-addon2">Mostra password</button>
+                <button class="btnGoSecondary m10" type="button" onclick="showpwd()">Mostra password</button>
                 <input type="password" id="pwd2" name="pwd2" placeholder="Conferma password">
             </div>
         </div>
         <div class="rowDiv">
-            <input type="number" class="form-control" name="telefono" placeholder="Numero di telefono">
-            <button type="submit" class="btnGoSecondary">REGISTRATI</button>
+            <input type="number" id="telefono" name="telefono" placeholder="Numero di telefono">
         </div>
     </form>
+    <div class="rowDiv">
+        <button class="btnGo" onclick="validation()" id="submitBtn">REGISTRATI</button>
+    </div>
 </div>
 
 
 <script>
+    var div_error = document.getElementById("div-error");
+    div_error.style.visibility = "hidden"
+    div_error.style.opacity = 0;
+    div_error.style.transition = "visibility, opacity 500ms"
+
+
     function showpwd() {
         x = document.getElementById("pwd1")
         y = document.getElementById("pwd2")
@@ -60,6 +72,103 @@
         }
 
     }
+
+    function validation() {
+        var ok = true;
+        var nome = document.getElementById("nome")
+        if (!validateTxt(nome.value)){
+            nome.style.borderColor = "red";
+            div_error.style.visibility = "visible";
+            div_error.style.opacity = 1;
+            ok = false;
+        }else {
+            nome.style.borderColor = "green";
+            ok = true;
+        }
+
+        var cognome = document.getElementById("cognome")
+        if (!validateTxt(cognome.value)){
+            cognome.style.borderColor = "red";
+            div_error.style.visibility = "visible";
+            div_error.style.opacity = 1;
+            ok = false;
+        }else {
+            cognome.style.borderColor = "green";
+            ok = true;
+        }
+
+        var email1 = document.getElementById("email1");
+        var email2 = document.getElementById("email2");
+        if(!validateEmail(email1.value,email2.value)){
+            email1.style.borderColor = "red";
+            email2.style.borderColor = "red";
+            div_error.style.visibility = "visible";
+            div_error.style.opacity = 1;
+            ok = false;
+        }else{
+            email1.style.borderColor = "green";
+            email2.style.borderColor = "green";
+            ok = true;
+        }
+
+        var pwd1 = document.getElementById("pwd1");
+        var pwd2 = document.getElementById("pwd2");
+        if(!validatePwd(pwd1.value,pwd2.value)){
+            pwd1.style.borderColor = "red";
+            pwd2.style.borderColor = "red";
+            div_error.style.visibility = "visible";
+            div_error.style.opacity = 1;
+            ok = false;
+        }else{
+            pwd1.style.borderColor = "green";
+            pwd2.style.borderColor = "green";
+            ok = true;
+        }
+
+        var number = document.getElementById("telefono");
+        if (number.value!=""){
+            if (!validateNumber(number.value)){
+                number.style.borderColor = "red";
+                number.style.borderColor = "red";
+                div_error.style.visibility = "visible";
+                div_error.style.opacity = 1;
+                ok = false;
+            }else{
+                number.style.borderColor = "green";
+                number.style.borderColor = "green";
+                ok = true;
+            }
+        }
+
+        if (ok){
+            document.getElementById("registrationForm").submit();
+        }
+
+    }
+
+    function validateNumber(number) {
+        var pattern = /((3[1-6][0-9]))(\d{7})/;
+        return pattern.test(number) && number.length==10;
+    }
+
+    function validatePwd(pwd1,pwd2) {
+        if ((pwd1.length>=8) && (pwd1==pwd2))
+            return true;
+        return false;
+    }
+
+    function validateEmail(e1,e2){
+        var pattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+        if(pattern.test(e1) && (e1.indexOf(' ')<0) && (e1==e2))
+            return true;
+        return false;
+    }
+
+    function validateTxt(txt){
+        var pattern = /[A-Za-z]+/;
+        return pattern.test(txt);
+    }
+
 </script>
 </body>
 </html>

@@ -11,6 +11,7 @@
   <head>
     <title>Needs.store</title>
     <link rel="stylesheet" type="text/css" href="css/homepagestyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <%
     Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
@@ -35,6 +36,15 @@
   <form>
     <input type="hidden" id="index" name="index" value="10">
   </form>
+
+  <%
+    String error = (String)request.getAttribute("error");
+    if (error!=null){
+  %>
+    <div class="divError m20">
+      <p style="font-weight: lighter;"><%=error%></p>
+    </div>
+  <%}%>
   <div class="container100">
     <form action="toAddannuncio" method="post">
       <button type="submit" class="btnGo" id="btnInserisci">INSERISCI ANNUNCIO</button>
@@ -79,7 +89,6 @@
   <div>
     <button id="btnLoadMore" class="btnGo">Carica altri articoli</button>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
   <script type="text/javascript">
     var album = "no";

@@ -17,14 +17,14 @@
 
 <nav>
     <a href="index.html" id="brand">Needs.store</a>
-    <label for="toggle">&#9776;</label>
+    <label for="toggle" style="margin-right: 10px">&#9776;</label>
     <input type="checkbox" id="toggle">
     <div class="menu">
         <form action="logout-servlet" class="inlineForm">
-            <button type="submit">Logout</button>
+            <button type="submit" class="btnGo">Logout</button>
         </form>
         <form action="cerca-servlet" class="inlineForm">
-            <button type="submit" name="button">Cerca</button>
+            <button type="submit" name="button" class="btnGo">Cerca</button>
         </form>
     </div>
 </nav>

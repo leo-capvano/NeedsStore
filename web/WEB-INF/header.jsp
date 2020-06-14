@@ -13,7 +13,7 @@
 
 <nav>
     <a href="index.html" id="brand">Needs.store</a>
-    <label for="toggle">&#9776;</label>
+    <label for="toggle" style="margin-right: 10px">&#9776;</label>
     <input type="checkbox" id="toggle">
     <div class="menu">
         <button type="button" name="accedi" class="navBtn"><a href="pagelogin.jsp">Accedi</a></button>
