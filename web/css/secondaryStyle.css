@@ -1,0 +1,11 @@
+.pDescriptor{
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.pContent{
+    padding: 10px;
+    font-weight: lighter;
+    font-size: 20px;
+}

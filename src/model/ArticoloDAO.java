@@ -9,6 +9,24 @@ import java.util.ArrayList;
 
 public class ArticoloDAO {
 
+    public ArrayList<Articolo> doRetrieveByEmail(String email){
+        ArrayList<Articolo> articoli = new ArrayList<>();
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select * from articoli where email_vend = ? " +
+                    "order by data_inserimento");
+            statement.setString(1,email);
+            ResultSet r = statement.executeQuery();
+            while (r.next()){
+                articoli.add(new Articolo(r.getString(1),r.getString(2),r.getString(3),
+                        r.getString(4),r.getDouble(5),r.getString(6),r.getString(7)));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return articoli;
+    }
+
     public ArrayList<Articolo> doRetrieveByTitolo(String titolo, int limit){
         ArrayList<Articolo> articoli = new ArrayList<>();
         try {
