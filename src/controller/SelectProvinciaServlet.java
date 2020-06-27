@@ -24,7 +24,7 @@ public class SelectProvinciaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String written = req.getParameter("written");
+        String written = req.getParameter("written").toUpperCase();
         //cerca nel json italia.json
         ArrayList<String> provs = new ArrayList<>();
         JsonParser parser = new JsonParser();
@@ -35,7 +35,7 @@ public class SelectProvinciaServlet extends HttpServlet {
                 JsonArray province =(JsonArray) regioni.get(i).getAsJsonObject().get("capoluoghi");
                 Iterator iterator = province.iterator();
                 while (iterator.hasNext()){
-                    String val = (String) iterator.next().toString();
+                    String val = (String) iterator.next().toString().toUpperCase();
                     String valClear = val.substring(1,val.length()-1);
                     if (valClear.contains(written)){
                         provs.add(valClear);

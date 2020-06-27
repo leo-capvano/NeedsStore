@@ -5,6 +5,22 @@ import java.sql.*;
 
 public class UtenteDAO {
 
+    public int emailAlreadyExists(String email){
+        int numEmails = 0;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select count(*) from utenti" +
+                    " where email = ?");
+            statement.setString(1,email);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            numEmails =  resultSet.getInt(1);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return numEmails;
+    }
+
     public Utente doRetrieveByEmail(String email){
         Utente u = null;
         try {

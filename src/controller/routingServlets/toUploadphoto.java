@@ -42,7 +42,7 @@ public class toUploadphoto extends HttpServlet {
 
         //ricerca in json provincie italiane, controlla se è presente nel file json
         String luogo = req.getParameter("luogo");
-        if (!validateLuogo(luogo)){
+        if (!validateLuogo(luogo.toUpperCase())){
             throw new GenericException("Provincia di vendita non valida");
         }
 
@@ -80,7 +80,7 @@ public class toUploadphoto extends HttpServlet {
                 Iterator iterator = province.iterator();
                 while (iterator.hasNext()){
                     String val = (String) iterator.next().toString();
-                    String valClear = val.substring(1,val.length()-1);
+                    String valClear = val.substring(1,val.length()-1).toUpperCase();
                     if (luogo.compareTo(valClear)==0)
                         return true;
                 }

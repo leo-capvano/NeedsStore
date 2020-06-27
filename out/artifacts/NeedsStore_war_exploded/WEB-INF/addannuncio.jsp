@@ -19,9 +19,12 @@
 <jsp:include page="headerLogged.jsp"></jsp:include>
 
 <div class="pageTitle">
-    <h1>Inserisci un annuncio</h1>
+    <h1 style="margin-bottom: 30px;">Inserisci un annuncio</h1>
 </div>
 
+<div class="rowDiv divError mg-bottom-20" id="div-error">
+    <p id="error-message"></p>
+</div>
 
 <div class="container">
     <form method="get" action="toUploadphoto" id="addAnnuncioForm">
@@ -33,7 +36,7 @@
         </div>
 
         <div class="rowDiv wrap mg-bottom-20">
-            <input type="text" onkeydown="suggerisciLuogo()" class="inputText" id="luogo" name="luogo" placeholder="Provincia di vendita">
+            <input type="text" onkeypress="suggerisciLuogo()" class="inputText" id="luogo" name="luogo" placeholder="Provincia di vendita">
             <select id="selectLuogo">
 
             </select>
@@ -50,70 +53,78 @@
 </body>
 <script>
 
-//var div_error = document.getElementById("div-error");
-//div_error.style.visibility = "hidden"
-//div_error.style.opacity = 0;
-//div_error.style.transition = "visibility, opacity 500ms"
+var div_error = document.getElementById("div-error");
+var error_message = document.getElementById("error-message")
+div_error.style.visibility = "hidden"
+div_error.style.opacity = 0;
+div_error.style.transition = "visibility, opacity 500ms"
 
+//validazione generale di tutti i campi
 function validation() {
-    var ok = true;
     var titolo = document.getElementById("titolo")
-    if (validateTxt(titolo.value)){
+    if (titolo.value==""){
         titolo.style.borderColor = "red";
         div_error.style.visibility = "visible";
         div_error.style.opacity = 1;
-        ok = false;
+        error_message.innerText = "Titolo mancante"
+        return;
     }else {
-        titolo.style.borderColor = "green";
-        ok = true;
-    }
-
-    var luogo = document.getElementById("luogo");
-    if(!validateLuogo(luogo.value)){
-        luogo.style.borderColor = "red";
-        luogo.style.borderColor = "red";
-        div_error.style.visibility = "visible";
-        div_error.style.opacity = 1;
-        ok = false;
-    }else{
-        luogo.style.borderColor = "green";
-        luogo.style.borderColor = "green";
-        ok = true;
-    }
-
-    var pwd1 = document.getElementById("pwd1");
-    var pwd2 = document.getElementById("pwd2");
-    if(!validatePwd(pwd1.value,pwd2.value)){
-        pwd1.style.borderColor = "red";
-        pwd2.style.borderColor = "red";
-        div_error.style.visibility = "visible";
-        div_error.style.opacity = 1;
-        ok = false;
-    }else{
-        pwd1.style.borderColor = "green";
-        pwd2.style.borderColor = "green";
-        ok = true;
-    }
-
-    var number = document.getElementById("telefono");
-    if (number.value!=""){
-        if (!validateNumber(number.value)){
-            number.style.borderColor = "red";
-            number.style.borderColor = "red";
+        if (validateTxt(titolo.value)){
+            titolo.style.borderColor = "red";
             div_error.style.visibility = "visible";
             div_error.style.opacity = 1;
-            ok = false;
-        }else{
-            number.style.borderColor = "green";
-            number.style.borderColor = "green";
-            ok = true;
+            error_message.innerText = "Formato titolo non corretto"
+            return;
+        }else {
+            titolo.style.borderColor = "green";
         }
     }
 
-    if (ok){
-        document.getElementById("registrationForm").submit();
+    var luogo = document.getElementById("luogo");
+    if (luogo.value==""){
+        luogo.style.borderColor = "red";
+        luogo.style.borderColor = "red";
+        div_error.style.visibility = "visible";
+        div_error.style.opacity = 1;
+        error_message.innerText = "Luogo di vendita mancante"
+        return;
+    }else {
+        if(!validateLuogo(luogo.value)){
+            luogo.style.borderColor = "red";
+            luogo.style.borderColor = "red";
+            div_error.style.visibility = "visible";
+            div_error.style.opacity = 1;
+            error_message.innerText = "Luogo di vendita scorretto"
+            return;
+        }else{
+            luogo.style.borderColor = "green";
+            luogo.style.borderColor = "green";
+        }
     }
 
+
+    var prezzo = document.getElementById("prezzo");
+    if (prezzo.value==""){
+        prezzo.style.borderColor = "red";
+        prezzo.style.borderColor = "red";
+        div_error.style.visibility = "visible";
+        div_error.style.opacity = 1;
+        error_message.innerText = "Prezzo mancante"
+        return;
+    }else{
+        if (!validateNumber(prezzo.value)){
+            prezzo.style.borderColor = "red";
+            prezzo.style.borderColor = "red";
+            div_error.style.visibility = "visible";
+            div_error.style.opacity = 1;
+            error_message.innerText = "Numero di telefono non valido"
+            return;
+        }else{
+            prezzo.style.borderColor = "green";
+            prezzo.style.borderColor = "green";
+        }
+    }
+    document.getElementById("addAnnuncioForm").submit();
 }
 
 function suggerisciLuogo() {
@@ -132,6 +143,7 @@ function suggerisciLuogo() {
     })
 }
 
+//click sull'option della select
 $("#selectLuogo").click(function () {
     $("#luogo").val($("#selectLuogo option:selected").text());
     $("#luogo").css("border-color","green");
@@ -139,10 +151,24 @@ $("#selectLuogo").click(function () {
 })
 
 
-
+//funzione di validazione del campo titolo
 function validateTxt(txt) {
-    var pattern = /\W+/;
+    var pattern = /(?=\W)(?=\S)/;
     return pattern.test(txt);
+}
+
+//per controllare se l'usr ha selezionato un luogo corretto
+//verifico che sia presente nelle options della select
+function validateLuogo(luogo) {
+   if ($("#luogo").val().toUpperCase() == $("#selectLuogo option:selected").text().toUpperCase())
+       return true;
+   return false;
+}
+
+function validateNumber(n) {
+    if (n>10000000)
+        return false;
+    return true
 }
 
 </script>

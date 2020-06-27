@@ -54,6 +54,7 @@
 
 <script>
     var div_error = document.getElementById("div-error");
+    var error_message = document.getElementById("error-message")
     div_error.style.visibility = "hidden"
     div_error.style.opacity = 0;
     div_error.style.transition = "visibility, opacity 500ms"
@@ -74,16 +75,15 @@
     }
 
     function validation() {
-        var ok = true;
         var nome = document.getElementById("nome")
         if (!validateTxt(nome.value)){
             nome.style.borderColor = "red";
             div_error.style.visibility = "visible";
             div_error.style.opacity = 1;
-            ok = false;
+            error_message.innerText = "Formato nome non corretto"
+            return;
         }else {
             nome.style.borderColor = "green";
-            ok = true;
         }
 
         var cognome = document.getElementById("cognome")
@@ -91,10 +91,10 @@
             cognome.style.borderColor = "red";
             div_error.style.visibility = "visible";
             div_error.style.opacity = 1;
-            ok = false;
+            error_message.innerText = "Formato cognome non corretto"
+            return;
         }else {
             cognome.style.borderColor = "green";
-            ok = true;
         }
 
         var email1 = document.getElementById("email1");
@@ -104,11 +104,11 @@
             email2.style.borderColor = "red";
             div_error.style.visibility = "visible";
             div_error.style.opacity = 1;
-            ok = false;
+            error_message.innerText = "Email non corrispondenti o scorrette"
+            return;
         }else{
             email1.style.borderColor = "green";
             email2.style.borderColor = "green";
-            ok = true;
         }
 
         var pwd1 = document.getElementById("pwd1");
@@ -118,11 +118,11 @@
             pwd2.style.borderColor = "red";
             div_error.style.visibility = "visible";
             div_error.style.opacity = 1;
-            ok = false;
+            error_message.innerText = "Password non corrispondenti o di lunghezza inferiore a 8 caratteri"
+            return;
         }else{
             pwd1.style.borderColor = "green";
             pwd2.style.borderColor = "green";
-            ok = true;
         }
 
         var number = document.getElementById("telefono");
@@ -132,18 +132,14 @@
                 number.style.borderColor = "red";
                 div_error.style.visibility = "visible";
                 div_error.style.opacity = 1;
-                ok = false;
+                error_message.innerText = "Formato numero di telefono non corretto"
+                return;
             }else{
                 number.style.borderColor = "green";
                 number.style.borderColor = "green";
-                ok = true;
             }
         }
-
-        if (ok){
-            document.getElementById("registrationForm").submit();
-        }
-
+         document.getElementById("registrationForm").submit();
     }
 
     function validateNumber(number) {
@@ -159,9 +155,22 @@
 
     function validateEmail(e1,e2){
         var pattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-        if(pattern.test(e1) && (e1.indexOf(' ')<0) && (e1==e2))
+        if(pattern.test(e1) && (e1.indexOf(' ')<0) && (e1==e2) && (!emailAlreadyExists(e1)))
             return true;
         return false;
+    }
+
+    function emailAlreadyExists(email) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState==4 && xhr.status == 200){
+                console.log(xhr.responseText)
+                if (xhr.responseText=="nonesiste")
+                    console.log(xhr.responseText)
+            }
+        }
+        xhr.open("get","email-already-exists?email="+email,false)
+        xhr.send();
     }
 
     function validateTxt(txt){

@@ -39,16 +39,12 @@
 <div class="colDiv">
     <div class="galleryPic centerDiv" id="galleryPic">
         <%if(album!=null){
-            for(int i =0; i<album.size(); i++){
-                if (i==0){%>
-        <div class="pics fade">
-            <img src="<%=album.get(i).getPath()%>" style="width: 450px;height: 400px;overflow: hidden;position: relative;background: rgb(107,149,149);margin: 10px 0;">
-        </div>
+            for(int i =0; i<album.size(); i++){%>
+                <div class="pics fade">
+                    <img src="<%=album.get(i).getPath()%>" style="width: 450px;height: 400px;overflow: hidden;position: relative;background: rgb(107,149,149);margin: 10px 0;">
+                </div>
+            <%}%>
         <%}else{%>
-        <div class="pics fade">
-            <img src="<%=album.get(i).getPath()%>" style="width: 400px;height: 400px;overflow: hidden;position: relative;background: rgb(107,149,149);margin: 10px 0;">
-        </div>
-        <%}}}else{%>
         <div>
             <img src="images/no-image.jpg" style="width: 400px;height: 400px;overflow: hidden;position: relative;background: rgb(107,149,149);margin: 10px 0;">
         </div>

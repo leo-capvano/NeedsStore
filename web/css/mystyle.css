@@ -294,9 +294,13 @@ a.prec, a.succ {
     right: 10px;
 }
 
+.pDescriptor{
+    padding: 10px;
+}
+
 @media only screen and (max-width: 800px){
     label{
-        display: block;
+        display: inline;
         cursor: pointer;
     }
     .menu{
@@ -317,6 +321,10 @@ a.prec, a.succ {
     .menu button.navBtn{
         border-color: black;
     }
+    .menu button.navBtn:hover{
+        background-color: #20c997;
+        transition: background-color 500ms;
+    }
     #toggle:checked + .menu{
         visibility: visible;
         opacity: 1;
@@ -328,11 +336,19 @@ a.prec, a.succ {
         font-size: 20px;
     }
 
+    #userLoggedNav{
+        float: left;
+        font-size: 15px;
+        margin-left: 10px;
+        margin-top: 2px;
+    }
+
     form.verticalForm input{
         width: 200px;
     }
     .pageTitle{
         font-size: 10px;
+        margin: 10px;
     }
 
     #contatti{

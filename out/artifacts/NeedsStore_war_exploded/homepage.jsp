@@ -179,6 +179,6 @@
 
   </script>
 
-  <link rel="stylesheet" type="text/css" href="css/myStyle.css">
+  <link rel="stylesheet" type="text/css" href="css/mystyle.css">
   </body>
 </html>
