@@ -28,8 +28,8 @@
 <div class="rowDiv">
     <div class="loginContainer" id="formContainer">
         <form action="login" method="post" class="verticalForm" id="loginForm">
-            <input id="email" name="email" type="email" class="focusOutline" placeholder="Email">
-            <input id="pwd" name="pwd" type="password" class="focusOutline" placeholder="Password">
+            <input onkeypress="nextField(this,event)" id="email" name="email" type="email" class="focusOutline" placeholder="Email">
+            <input onkeypress="nextField(this, event)" id="pwd" name="pwd" type="password" class="focusOutline" placeholder="Password">
         </form>
         <div class="rowDiv">
             <button class="btnGo" id="btnAccedi" onclick="validateLogin()">Accedi</button>
@@ -86,6 +86,15 @@
     }
 
 
+    function nextField(field,event){
+        if (event.keyCode==13){
+            if (field.id=="email"){
+                document.getElementById("pwd").focus();
+            }else if (field.id="pwd"){
+                document.getElementById("btnAccedi").click();
+            }
+        }
+    }
 
 </script>
 </html>

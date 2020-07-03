@@ -298,6 +298,12 @@ a.prec, a.succ {
     padding: 10px;
 }
 
+.rowDivStart{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
 @media only screen and (max-width: 800px){
     label{
         display: inline;
@@ -363,6 +369,14 @@ a.prec, a.succ {
     }
     .chapterTitle{
         font-size: 17px;
+    }
+
+    #userLoggedNav{
+        display: none;
+    }
+
+    #infoAccountDiv{
+        flex-direction: column;
     }
 
 }
