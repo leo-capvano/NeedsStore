@@ -55,8 +55,11 @@
                         <p><%=a.getPrezzo()%> euro - Pubblicato il <%=a.getData_inserimento()%></p><br>
                         <p class="luogo"><%=a.getLuogo()%></p>
                         <div>
-                            <form class="form-inline" action="toPageAcquista">
+                            <form class="inlineForm" action="toPageAcquista">
                                 <button class="btnGo" type="submit" name="idArticolo" value="<%=a.getIdArticolo()%>">Dettagli</button>
+                            </form>
+                            <form class="inlineForm mg-left-30" action="toModificaArt">
+                                <button class="btnGo" name="modificaArt" id="modificaArt" type="submit" value="<%=a.getIdArticolo()%>">Modifica articolo</button>
                             </form>
                         </div>
                     </div>

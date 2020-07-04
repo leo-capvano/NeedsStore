@@ -9,3 +9,14 @@
     font-weight: lighter;
     font-size: 20px;
 }
+
+.roundedInput{
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 400px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: grey;
+}
