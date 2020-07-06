@@ -9,6 +9,52 @@ import java.util.ArrayList;
 
 public class ArticoloDAO {
 
+    public int doUpdateTitolo(String idArticolo, String newTitolo){
+        int result = 0;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("update articoli set titolo = ? where" +
+                    " idArticolo = ?");
+            statement.setString(1,newTitolo);
+            statement.setString(2, idArticolo);
+            result = statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
+    }
+
+    public int doUpdatePrezzo(String idArticolo, String newPrezzo){
+        int result = 0;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("update articoli set prezzo = ? where" +
+                    " idArticolo = ?");
+            statement.setString(1,newPrezzo);
+            statement.setString(2, idArticolo);
+            result = statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
+    }
+
+    public int doUpdateDescrizione(String idArticolo, String newDescrizione){
+        int result = 0;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("update articoli set descrizione = ? where" +
+                    " idArticolo = ?");
+            statement.setString(1,newDescrizione);
+            statement.setString(2, idArticolo);
+            result = statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
+    }
+
+
     public ArrayList<Articolo> doRetrieveByEmail(String email){
         ArrayList<Articolo> articoli = new ArrayList<>();
         try {

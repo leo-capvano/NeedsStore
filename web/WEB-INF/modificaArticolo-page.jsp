@@ -31,13 +31,15 @@
     <p id="error-message"></p>
 </div>
 
+<input type="hidden" value="<%=artToEdit.getIdArticolo()%>" id="inputIdArt">
+
 <div class="colDiv">
     <div class="rowDiv baseline" id="formEditTitolo">
         <input class="focusOutline roundedInput mg-right-30" type="text" name="editTitolo" id="editTitolo" placeholder="<%=artToEdit.getTitolo()%>">
         <button id="butEditTitolo" class="btnGo" onclick="editTitolo()">Modifica titolo</button>
     </div>
     <div class="rowDiv baseline mg-top-30" id="formEditDescrizione">
-        <textarea rows="10" class="focusOutline roundedInput mg-right-30" type="text" name="editTitolo" id="editDescrizione">
+        <textarea rows="10" class="focusOutline roundedInput mg-right-30" type="text" id="editDescrizione">
         <%=artToEdit.getDescrizione()%>
         </textarea>
         <button id="butEditDescrizione" class="btnGo" onclick="editDescrizione()">Modifica Descrizione</button>
@@ -58,11 +60,31 @@
     div_error.style.visibility = "hidden"
     div_error.style.opacity = 0;
     div_error.style.transition = "visibility, opacity 500ms"
-
+    var idArt = document.getElementById("inputIdArt").value;
 
 
     function editDescrizione() {
         //invio richiesta ajax per modifica descrizione
+        var desc = document.getElementById("editDescrizione").value;
+        $.ajax({
+            url: "edit-servlet",
+            type: "POST",
+            data: "edit=desc"+"&idArticolo="+idArt+"&descrizione="+desc,
+            processData: false,
+            success: function (result) {
+                console.log(result)
+                if (result!="errore"){
+                    document.getElementById("editDescrizione").style.borderColor = "green";
+                    alert("Descrizione modificata con successo")
+                }else{
+                    document.getElementById("editDescrizione").style.borderColor = "red";
+                    div_error.style.visibility = "visible";
+                    div_error.style.opacity = 1;
+                    error_message.innerText = "Errore nella modifica della descrizione"
+                }
+            }
+        })
+
     }
 
 
@@ -86,6 +108,24 @@
             }else{
                 prezzo.style.borderColor = "green";
                 //invia richiesta ajax per modifica prezzo
+                $.ajax({
+                    url: "edit-servlet",
+                    type: "POST",
+                    data: "edit=przz"+"&idArticolo="+idArt+"&prezzo="+prezzo.value,
+                    processData: false,
+                    success: function (result) {
+                        console.log(result)
+                        if (result!="errore"){
+                            document.getElementById("editPrezzo").style.borderColor = "green";
+                            alert("Prezzo modificato con successo")
+                        }else{
+                            document.getElementById("editPrezzo").style.borderColor = "red";
+                            div_error.style.visibility = "visible";
+                            div_error.style.opacity = 1;
+                            error_message.innerText = "Errore nella modifica del prezzo"
+                        }
+                    }
+                })
             }
         }
     }
@@ -108,6 +148,24 @@
             }else {
                 titolo.style.borderColor = "green";
                 //invio richiesta ajax x modifica titolo
+                $.ajax({
+                    url: "edit-servlet",
+                    type: "POST",
+                    data: "edit=ttl"+"&idArticolo="+idArt+"&titolo="+titolo.value,
+                    processData: false,
+                    success: function (result) {
+                        console.log(result)
+                        if (result!="errore"){
+                            document.getElementById("editTitolo").style.borderColor = "green";
+                            alert("Titolo modificato con successo")
+                        }else{
+                            document.getElementById("editTitolo").style.borderColor = "red";
+                            div_error.style.visibility = "visible";
+                            div_error.style.opacity = 1;
+                            error_message.innerText = "Errore nella modifica del titolo"
+                        }
+                    }
+                })
             }
         }
     }
@@ -131,5 +189,6 @@
 
 <link rel="stylesheet" type="text/css" href="css/mystyle.css">
 <link rel="stylesheet" type="text/css" href="css/secondaryStyle.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </body>
 </html>
