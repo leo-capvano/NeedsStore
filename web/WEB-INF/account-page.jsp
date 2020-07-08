@@ -12,6 +12,7 @@
 <html>
 <head>
     <title>Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
@@ -60,6 +61,9 @@
                             </form>
                             <form class="inlineForm mg-left-30" action="toModificaArt">
                                 <button class="btnGo" name="modificaArt" id="modificaArt" type="submit" value="<%=a.getIdArticolo()%>">Modifica articolo</button>
+                            </form>
+                            <form class="inlineForm mg-left-30" action="toEliminaArt">
+                                <button class="btnGo" name="eliminaArt" id="eliminaArt" type="submit" value="<%=a.getIdArticolo()%>">Elimina articolo</button>
                             </form>
                         </div>
                     </div>

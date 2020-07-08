@@ -116,7 +116,7 @@ public class ArticoloDAO {
         try {
             Connection connection = ConPool.getConnection();
             PreparedStatement statement = connection.prepareStatement("select * from articoli where idArticolo not in " +
-                    "(select idArticolo from acquisti) order by data_inserimento desc limit ? offset ?");
+                    "(select idArticolo from vendite) order by data_inserimento desc limit ? offset ?");
             statement.setInt(1, l);
             statement.setInt(2, offset);
             ResultSet resultSet = statement.executeQuery();
@@ -222,4 +222,22 @@ public class ArticoloDAO {
         return articoli;
     }
 
+    public String doDelete(String idArticolo) {
+        int r=0;
+        int r2=0;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement2 = connection.prepareStatement("delete from album where idArticolo = ?");
+            statement2.setString(1,idArticolo);
+            r2 = statement2.executeUpdate();
+            PreparedStatement statement = connection.prepareStatement("delete from articoli where idArticolo = ?");
+            statement.setString(1,idArticolo);
+            r = statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if (r==1)
+            return "si";
+        return "no";
+    }
 }

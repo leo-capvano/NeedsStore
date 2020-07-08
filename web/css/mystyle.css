@@ -304,6 +304,15 @@ a.prec, a.succ {
     justify-content: start;
 }
 
+.imgContainer{
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    background: rgb(107,149,149);
+    margin: 10px 0;
+}
+
 @media only screen and (max-width: 800px){
     label{
         display: inline;
@@ -324,6 +333,11 @@ a.prec, a.succ {
         background-color: transparent;
         margin-top: 5px;
     }
+    button:hover{
+        background-color: #20c997;
+        transition: background-color 500ms;
+    }
+
     .menu button.navBtn{
         border-color: black;
     }
@@ -343,10 +357,7 @@ a.prec, a.succ {
     }
 
     #userLoggedNav{
-        float: left;
-        font-size: 15px;
-        margin-left: 10px;
-        margin-top: 2px;
+        display: none;
     }
 
     form.verticalForm input{
@@ -371,12 +382,13 @@ a.prec, a.succ {
         font-size: 17px;
     }
 
-    #userLoggedNav{
-        display: none;
-    }
-
     #infoAccountDiv{
         flex-direction: column;
+    }
+
+    .imgContainer{
+        width: 250px;
+        height: 250px;
     }
 
 }
