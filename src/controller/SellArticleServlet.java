@@ -1,9 +1,6 @@
 package controller;
 
-import model.Articolo;
-import model.ArticoloDAO;
-import model.Vendita;
-import model.VenditaDAO;
+import model.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,14 +18,20 @@ public class SellArticleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        Utente utenteLoggato = (Utente) req.getSession().getAttribute("utenteLoggato");
+        if (utenteLoggato==null){
+            throw new GenericException("Non sei autorizzato a visualizzare questa pagina");
+        }
+
         String idArticolo = req.getParameter("idArticolo");
         ArticoloDAO articoloDAO = new ArticoloDAO();
         //crea oggetto vendita
         String idVendita = UUID.randomUUID().toString();
         Double prezzo = articoloDAO.doRetrieveById(idArticolo).getPrezzo();
         String dataVendita = LocalDate.now().toString();
+        String emailVend = utenteLoggato.getEmail();
 
-        Vendita vendita = new Vendita(idVendita,idArticolo,prezzo,dataVendita);
+        Vendita vendita = new Vendita(idVendita,idArticolo,prezzo,dataVendita,emailVend);
         //carica vendita nel db
         VenditaDAO venditaDAO = new VenditaDAO();
         int r = venditaDAO.doSell(vendita);
@@ -36,7 +39,7 @@ public class SellArticleServlet extends HttpServlet {
         String responseText = new String();
         if (r>0){
             //elimina record dal db articoli
-            articoloDAO.doDelete(idArticolo);
+            articoloDAO.doSell(idArticolo);
             responseText = "ok";
         }else{
             responseText = "no";

@@ -5,12 +5,22 @@ public class Vendita {
     private String idArticolo;
     private double prezzo;
     private String dataVendita;
+    private String emailVend;
 
-    public Vendita(String idVendita, String idArticolo, double prezzo, String dataVendita) {
+    public String getEmailVend() {
+        return emailVend;
+    }
+
+    public void setEmailVend(String emailVend) {
+        this.emailVend = emailVend;
+    }
+
+    public Vendita(String idVendita, String idArticolo, double prezzo, String dataVendita, String emailVend) {
         this.idVendita = idVendita;
         this.idArticolo = idArticolo;
         this.prezzo = prezzo;
         this.dataVendita = dataVendita;
+        this.emailVend = emailVend;
     }
 
     public String getIdVendita() {

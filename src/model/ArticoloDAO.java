@@ -59,13 +59,13 @@ public class ArticoloDAO {
         ArrayList<Articolo> articoli = new ArrayList<>();
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement("select * from articoli where email_vend = ? " +
-                    "order by data_inserimento");
+            PreparedStatement statement = connection.prepareStatement("select * from articoli where email_vend = ? and venduto = 0" +
+                    " order by data_inserimento");
             statement.setString(1,email);
             ResultSet r = statement.executeQuery();
             while (r.next()){
                 articoli.add(new Articolo(r.getString(1),r.getString(2),r.getString(3),
-                        r.getString(4),r.getDouble(5),r.getString(6),r.getString(7)));
+                        r.getString(4),r.getDouble(5),r.getString(6),r.getString(7),r.getBoolean(8)));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -77,8 +77,8 @@ public class ArticoloDAO {
         ArrayList<Articolo> articoli = new ArrayList<>();
         try {
             Connection conn = ConPool.getConnection();
-            PreparedStatement statement = conn.prepareStatement("select * from articoli where idArticolo not in " +
-                    "(select idArticolo from acquisti) and titolo like '"+titolo+"%' order by data_inserimento desc limit "+limit);
+            PreparedStatement statement = conn.prepareStatement("select * from articoli where venduto = 0" +
+                    " and titolo like '"+titolo+"%' order by data_inserimento desc limit "+limit);
             ResultSet r = statement.executeQuery();
             while (r.next()){
                 articoli.add(new Articolo(r.getString(1),r.getString(2),r.getString(3),
@@ -94,8 +94,8 @@ public class ArticoloDAO {
     public void doPublish(Articolo a){
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement("insert into articoli(idArticolo,titolo,descrizione,email_vend,prezzo,luogo,data_inserimento)" +
-                    "values (?,?,?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("insert into articoli(idArticolo,titolo,descrizione,email_vend,prezzo,luogo,data_inserimento,venduto)" +
+                    "values (?,?,?,?,?,?,?,0)");
             statement.setString(1,a.getIdArticolo());
             statement.setString(2,a.getTitolo());
             statement.setString(3,a.getDescrizione());
@@ -115,73 +115,14 @@ public class ArticoloDAO {
         ArrayList<Articolo> articoli = new ArrayList<Articolo>();
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement("select * from articoli where idArticolo not in " +
-                    "(select idArticolo from vendite) order by data_inserimento desc limit ? offset ?");
+            PreparedStatement statement = connection.prepareStatement("select * from articoli where venduto = 0 " +
+                    "order by data_inserimento desc limit ? offset ?");
             statement.setInt(1, l);
             statement.setInt(2, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                     articoli.add(new Articolo(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),
                             resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6),resultSet.getString(7)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return articoli;
-    }
-
-    public ArrayList<Articolo> doRetrieveNonVendutiTenFromIndex(int index){
-        ArrayList<Articolo> articoli = new ArrayList<Articolo>();
-        int i = 0;
-        int caricati = 0;
-        try {
-            Connection connection = ConPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement("select * from articoli where idArticolo not in " +
-                    "(select idArticolo from acquisti) order by data_inserimento desc");
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-                if ((i>=index)&&(caricati<10)){
-                    articoli.add(new Articolo(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),
-                            resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6),resultSet.getString(7)));
-                    caricati++;
-                }
-                i++;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return articoli;
-    }
-
-    public ArrayList<Articolo> doRetrieveNonVendutiTen(){
-        ArrayList<Articolo> articoli = new ArrayList<Articolo>();
-        int i = 0;
-        try {
-            Connection connection = ConPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement("select * from articoli where idArticolo not in " +
-                    "(select idArticolo from acquisti) order by data_inserimento desc");
-            ResultSet resultSet = statement.executeQuery();
-            while ((resultSet.next())&&(i<10)){
-                articoli.add(new Articolo(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),
-                        resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6),resultSet.getString(7)));
-                i++;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return articoli;
-    }
-
-    public ArrayList<Articolo> doRetrieveNonVenduti(){
-        ArrayList<Articolo> articoli = new ArrayList<Articolo>();
-        try {
-            Connection connection = ConPool.getConnection();
-            PreparedStatement statement = connection.prepareStatement("select * from articoli where idArticolo not in " +
-                    "(select idArticolo from acquisti) order by data_inserimento desc");
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-                articoli.add(new Articolo(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),
-                        resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6),resultSet.getString(7)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -222,17 +163,13 @@ public class ArticoloDAO {
         return articoli;
     }
 
-    public String doDelete(String idArticolo) {
+    public String doSell(String idArticolo) {
         int r=0;
-        int r2=0;
         try {
             Connection connection = ConPool.getConnection();
-            PreparedStatement statement2 = connection.prepareStatement("delete from album where idArticolo = ?");
+            PreparedStatement statement2 = connection.prepareStatement("update articoli set venduto = 1 where idArticolo = ?");
             statement2.setString(1,idArticolo);
-            r2 = statement2.executeUpdate();
-            PreparedStatement statement = connection.prepareStatement("delete from articoli where idArticolo = ?");
-            statement.setString(1,idArticolo);
-            r = statement.executeUpdate();
+            r = statement2.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

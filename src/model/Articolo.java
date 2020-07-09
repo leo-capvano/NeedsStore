@@ -11,6 +11,7 @@ public class Articolo {
     private Double prezzo;
     private String luogo;
     private String data_inserimento;
+    private boolean venduto;
 
     public String getData_inserimento() {
         return data_inserimento;
@@ -68,6 +69,14 @@ public class Articolo {
         this.luogo = luogo;
     }
 
+    public boolean isVenduto() {
+        return venduto;
+    }
+
+    public void setVenduto(boolean venduto) {
+        this.venduto = venduto;
+    }
+
     public Articolo(String idArticolo, String titolo, String descrizione, String email_vend, Double prezzo, String luogo, String data_inserimento) {
         this.idArticolo = idArticolo;
         this.titolo = titolo;
@@ -76,5 +85,17 @@ public class Articolo {
         this.prezzo = prezzo;
         this.luogo = luogo;
         this.data_inserimento = data_inserimento;
+        this.venduto = false;
+    }
+
+    public Articolo(String idArticolo, String titolo, String descrizione, String email_vend, Double prezzo, String luogo, String data_inserimento, boolean venduto) {
+        this.idArticolo = idArticolo;
+        this.titolo = titolo;
+        this.descrizione = descrizione;
+        this.email_vend = email_vend;
+        this.prezzo = prezzo;
+        this.luogo = luogo;
+        this.data_inserimento = data_inserimento;
+        this.venduto = venduto;
     }
 }

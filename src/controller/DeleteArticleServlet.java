@@ -18,7 +18,7 @@ public class DeleteArticleServlet extends HttpServlet {
 
         String idArticolo = req.getParameter("idArticolo");
         ArticoloDAO articoloDAO = new ArticoloDAO();
-        String r = articoloDAO.doDelete(idArticolo);
+        String r = articoloDAO.doSell(idArticolo);
         PrintWriter writer = resp.getWriter();
         resp.setContentType("UTF-8");
         writer.write(r);

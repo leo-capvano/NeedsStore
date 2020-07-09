@@ -12,6 +12,7 @@
     <title>Needs.store</title>
     <link rel="stylesheet" type="text/css" href="css/homepagestyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <%
     Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
@@ -58,7 +59,7 @@
         <div class="container" id="contenitoreArticoli">
           <div class="riga" id="divArticolo"><!-- div riga-->
             <div>
-              <div style="width: 300px;height: 300px;overflow: hidden;position: relative;background: rgb(107,149,149);margin: 10px 0;">
+              <div class="imgContainer">
                 <%if(album.size()>0){%>
                   <img src="${request.contextPath}<%=album.get(0).getPath()%>" style="width: 100%;position: absolute;left: 0;top: 50%;transform: translateY(-50%);">
                 <%}else{%>
