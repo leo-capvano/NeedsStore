@@ -8,6 +8,22 @@ import java.util.ArrayList;
 
 public class VenditaDAO {
 
+    public ArrayList<Vendita> doRetrieveAll(){
+        ArrayList<Vendita> vendite = new ArrayList<>();
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select * from vendite");
+            ResultSet r = statement.executeQuery();
+            while (r.next()){
+                vendite.add(new Vendita(r.getString(1),r.getString(2),r.getDouble(3),r.getString(4),r.getString(5)));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return vendite;
+    }
+
+
     public ArrayList<Vendita> doRetrieveByUser(String email){
         ArrayList<Vendita> vendite = new ArrayList<>();
         try {
@@ -42,4 +58,23 @@ public class VenditaDAO {
         }
         return r;
     }
+
+
+    public Vendita doRetrieveByIdArticolo(String idArticolo){
+        Vendita vendita = null;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select * from vendite where idArticolo = ?");
+            statement.setString(1,idArticolo);
+            ResultSet r = statement.executeQuery();
+            while (r.next()){
+                vendita = new Vendita(r.getString(1),r.getString(2),r.getDouble(3),r.getString(4),r.getString(5));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return vendita;
+    }
+
+
 }

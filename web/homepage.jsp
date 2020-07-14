@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.*" %><%--
+<%@ page import="model.*" %>
+<%@ page import="java.util.HashMap" %><%--
   Created by IntelliJ IDEA.
   User: leoca
   Date: 02/04/2020
@@ -7,6 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page errorPage="/errorPage.jsp" %>
 <html>
   <head>
     <title>Needs.store</title>
@@ -26,6 +28,7 @@
 
   <body>
 
+
   <%
     //carica il catalogo di articoli
     ArticoloDAO adao = new ArticoloDAO();
@@ -33,6 +36,7 @@
     ArrayList<Articolo> articoli = adao.doRetrieve(10, 0);
     session.setAttribute("articoli",articoli);
     ArrayList<Album> album = new ArrayList<>();
+    HashMap<String,String> preferiti = (HashMap<String, String>) session.getAttribute("preferiti");
   %>
   <form>
     <input type="hidden" id="index" name="index" value="10">
@@ -78,6 +82,9 @@
                   </form>
                 </div>
               </div>
+              <%if (preferiti.containsKey(a.getIdArticolo())){%>
+                <img src="static_images/heart.png" style="width: 30px;height: 30px;">
+              <%}%>
             </div><!-- div art-->
           </div>
         </div>
@@ -94,6 +101,7 @@
   <script type="text/javascript">
     var album = "no";
     var root = document.getElementById("articles");
+
 
     //caricamento articoli non ancora visualizzati
     $("#btnLoadMore").click(function(){

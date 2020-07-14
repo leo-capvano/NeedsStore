@@ -2,13 +2,15 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Album" %>
 <%@ page import="model.Utente" %>
-<%@ page import="model.UtenteDAO" %><%--
+<%@ page import="model.UtenteDAO" %>
+<%@ page import="java.util.HashMap" %><%--
   Created by IntelliJ IDEA.
   User: leoca
   Date: 12/04/2020
   Time: 16:58
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page errorPage="/errorPage.jsp" %>
 <html>
 <head>
     <title>Acquista - Needs.store</title>
@@ -23,7 +25,7 @@
     ArrayList<Album> album = (ArrayList<Album>) request.getAttribute("album");
     UtenteDAO udao = new UtenteDAO();
     Utente venditore = udao.doRetrieveByEmail(articolo.getEmail_vend());
-
+    HashMap<String,String> preferiti = (HashMap<String, String>) session.getAttribute("preferiti");
     Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
 %>
 
@@ -68,6 +70,11 @@
                     <a style="visibility: hidden;opacity: 0;transition: visibility, opacity 500ms;" id="aWhatsapp" href="https://wa.me/15551234567?text=Ciao%20<%=venditore.getNome()%>%20ti%20contatto%20per%20il%20tuo%20annuncio%20su%20Needs.store:%20<%=articolo.getTitolo()%>">
                         <button id="whatsapp" class="btnGo w100">Messaggia su whatsapp</button>
                     </a>
+                    <%if (utenteLoggato!=null){%>
+                    <form action="addPreferite" class="inlineForm">
+                        <button class="btnGo redBtn" style="background-color: rgb(187,86,86);" name="idArticolo" onclick="addPreferite(this)" value="<%=articolo.getIdArticolo()%>">Aggiungi ai preferiti</button>
+                    </form>
+                    <%}%>
                 </div>
                 <%}%>
             </div>

@@ -133,6 +133,7 @@ form.verticalForm input, .inputText{
     border-color: grey;
 }
 
+
 .focusOutline:focus{
     outline-color: #20c997;
 }
@@ -313,6 +314,25 @@ a.prec, a.succ {
     margin: 10px 0;
 }
 
+
+.redBtn:hover{
+    background-color: rgba(204, 32, 40, 0.85);
+    transition: background-color 500ms;
+}
+
+.backgroundRed{
+    background-color: rgb(187,86,86);
+}
+
+#dettagliUtente p{
+    display: inline;
+    padding: 5px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
 @media only screen and (max-width: 800px){
     label{
         display: inline;
@@ -348,7 +368,7 @@ a.prec, a.succ {
     #toggle:checked + .menu{
         visibility: visible;
         opacity: 1;
-        height: 140px;
+        height: 180px;
         transition: visibility, opacity, height 1s;
     }
 

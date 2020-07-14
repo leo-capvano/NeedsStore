@@ -2,8 +2,66 @@ package model;
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UtenteDAO {
+
+    public void doEditTelefono(String email, String telefono){
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("update utenti set telefono = ?" +
+                    " where email = ?");
+            statement.setString(1,telefono);
+            statement.setString(2,email);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
+    public void doEditCognome(String email, String cognome){
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("update utenti set cognome = ?" +
+                    " where email = ?");
+            statement.setString(1,cognome);
+            statement.setString(2,email);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void doEditNome(String email, String nome){
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("update utenti set nome = ?" +
+                    " where email = ?");
+            statement.setString(1,nome);
+            statement.setString(2,email);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
+    public ArrayList<Utente> doRetrieveAll(){
+        ArrayList<Utente> utenti = new ArrayList<>();
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select * from utenti");
+            ResultSet r = statement.executeQuery();
+            while (r.next()){
+                utenti.add(new Utente(r.getString(1),r.getString(2),r.getString(3),r.getString(4),
+                        r.getString(5),r.getBoolean(6)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return utenti;
+    }
 
     public int emailAlreadyExists(String email){
         int numEmails = 0;

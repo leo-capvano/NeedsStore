@@ -27,9 +27,17 @@
         <form action="logout-servlet" class="inlineForm">
             <button type="submit" class="btnGo">Logout</button>
         </form>
+        <form class="inlineForm" action="toPreferite">
+            <button type="submit" name="button" class="navBtn redBtn">Preferiti</button>
+        </form>
         <form action="cerca-servlet" class="inlineForm">
             <button type="submit" name="button" class="btnGo">Cerca</button>
         </form>
+        <%if(utenteLoggato.isAdmin()){%>
+        <form class="inlineForm" action="adminPage">
+            <button type="submit" name="btnAdmin" value="btnAdmin" class="btnGo">ADMIN</button>
+        </form>
+        <%}%>
     </div>
 </nav>
 
