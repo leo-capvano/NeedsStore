@@ -20,6 +20,7 @@ public class toAddannuncio extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession();
+        //solo gli utenti loggati possono inserire un annuncio
         if (session.getAttribute("utenteLoggato")!=null){
             RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/addannuncio.jsp");
             dispatcher.forward(req,resp);

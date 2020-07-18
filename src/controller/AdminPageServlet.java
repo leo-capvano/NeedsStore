@@ -21,9 +21,12 @@ public class AdminPageServlet extends HttpServlet {
 
         //recupero utente admin
         Utente utenteLoggato =(Utente) req.getSession().getAttribute("utenteLoggato");
+        if ((utenteLoggato==null)||(!utenteLoggato.isAdmin()))
+            throw new GenericException("Non sei autorizzato :(");
 
         if (req.getParameter("btnAdmin")!=null) {
             //è stato premuto btnAdmin, si effettua solo controllo e ridirezione verso la jsp
+            //controllo se l'utente è admin
             String dest = "";
             if (utenteLoggato.isAdmin()) {
                 dest = "WEB-INF/admin-page.jsp";
@@ -35,7 +38,7 @@ public class AdminPageServlet extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher(dest);
             dispatcher.forward(req, resp);
         }else if (req.getParameter("btnGetUsers")!=null){
-            //è stato premuto ul btnGetUsers => restituiamo tutti gli utenti nel db
+            //è stato premuto ul btnGetUsers => carichiamo e restituiamo tutti gli utenti nel db
             UtenteDAO utenteDAO = new UtenteDAO();
             ArrayList<Utente> utenti = utenteDAO.doRetrieveAll();
             String utentiJson = new Gson().toJson(utenti);
@@ -47,7 +50,7 @@ public class AdminPageServlet extends HttpServlet {
             writer.flush();
             writer.close();
         }else if (req.getParameter("btnGetVendite")!=null) {
-            //è stato premuto il btnGetVendite => restituiamo tutte le vendite nel db
+            //è stato premuto il btnGetVendite => carichiamo e restituiamo tutte le vendite nel db
             ArticoloDAO articoloDAO = new ArticoloDAO();
             ArrayList<Articolo> articoliVenduti = articoloDAO.doRetrieveSold();
             String articoliJson = new Gson().toJson(articoliVenduti);

@@ -19,7 +19,7 @@ public class EditUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Utente utenteLoggato = (Utente) req.getSession().getAttribute("utenteLoggato");
-        if (!utenteLoggato.isAdmin()){
+        if ((!utenteLoggato.isAdmin())||(utenteLoggato==null)){
             throw new GenericException("non sei autorizzato! :(");
         }
 

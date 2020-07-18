@@ -1,9 +1,6 @@
 package controller;
 
-import model.Album;
-import model.AlbumDAO;
-import model.Articolo;
-import model.ArticoloDAO;
+import model.*;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -35,20 +32,30 @@ public class UploadImage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        Utente utenteLoggato = (Utente) req.getSession().getAttribute("utenteLoggato");
+        if (utenteLoggato==null){
+            throw new GenericException("Non sei autorizzato a visualizzare questa pagina");
+        }
+
+
         String filePath = "";
         String filename = "";
         List<FileItem> items = new ArrayList<FileItem>();
+        //salvo lista dei filenames delle img caricato per salvarli poi nel db
         ArrayList<String> filenames = new ArrayList<>();
         InputStream in = null;
         File uploadPath = new File("C:\\Users\\leoca\\Desktop\\immagini");
-        if(ServletFileUpload.isMultipartContent(req)){
+        if(ServletFileUpload.isMultipartContent(req)){ //controllo se il form è multipart
             try {
+                //fa parte di apache common file upload, gestisce multipli file x singolo HTML
                 ServletFileUpload sf = new ServletFileUpload(new DiskFileItemFactory());
-                items = sf.parseRequest(req);
+                items = sf.parseRequest(req); //recupero i vari files(items)
 
                 for (FileItem item : items){
+                    //rendo il nome unico con random()+filename originale
                     filename = ((int)(Math.random()*1000))+item.getName();
                     in = item.getInputStream();
+                    //creo oggetto del nuovo file da uploadare
                     File newFile = new File(uploadPath, filename);
                     Files.copy(in,newFile.toPath());
                     filenames.add(filename);

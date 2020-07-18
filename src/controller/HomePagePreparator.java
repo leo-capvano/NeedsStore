@@ -20,6 +20,7 @@ public class HomePagePreparator extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        //inizializzo la sessione dei preferiti e rimando alla homepage
         HttpSession session = req.getSession();
         HashMap<String,String> preferiti = new HashMap<>();
         session.setAttribute("preferiti",preferiti);

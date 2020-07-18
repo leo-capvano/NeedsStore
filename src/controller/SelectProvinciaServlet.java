@@ -24,6 +24,8 @@ public class SelectProvinciaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        //recupera la stringa scritta in input e cerca le province che matchano, poi restituiscile
+
         String written = req.getParameter("written").toUpperCase();
         //cerca nel json italia.json
         ArrayList<String> provs = new ArrayList<>();

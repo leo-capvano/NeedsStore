@@ -1,6 +1,9 @@
 package controller;
 
+import model.Articolo;
 import model.ArticoloDAO;
+import model.GenericException;
+import model.Utente;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,6 +22,14 @@ public class editArticoloServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String idArticolo = req.getParameter("idArticolo");
+        ArticoloDAO articoloDAO = new ArticoloDAO();
+        Articolo articolo = articoloDAO.doRetrieveById(idArticolo);
+        Utente utenteLoggato = (Utente) req.getSession().getAttribute("utenteLoggato");
+        //controllo che chi modifica l'articolo sia effettivamente il proprietario di quest'ultimo
+        //oppure sia l'admin
+        if ((utenteLoggato.isAdmin())||(!articolo.getEmail_vend().equals(utenteLoggato.getEmail())))
+            throw new GenericException("Non sei autorizzato a questa azione");
+
         String op = req.getParameter("edit");
         PrintWriter writer = resp.getWriter();
 

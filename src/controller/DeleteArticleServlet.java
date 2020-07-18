@@ -2,6 +2,8 @@ package controller;
 
 import model.Articolo;
 import model.ArticoloDAO;
+import model.GenericException;
+import model.Utente;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +20,12 @@ public class DeleteArticleServlet extends HttpServlet {
 
         String idArticolo = req.getParameter("idArticolo");
         ArticoloDAO articoloDAO = new ArticoloDAO();
+        Articolo articolo = articoloDAO.doRetrieveById(idArticolo);
+        Utente utenteLoggato = (Utente) req.getSession().getAttribute("utenteLoggato");
+        //controllo che chi elimina l'articolo sia effettivamente il proprietario di quest'ultimo
+        if ((utenteLoggato==null)||(!articolo.getEmail_vend().equals(utenteLoggato.getEmail())))
+            throw new GenericException("Non sei autorizzato a questa azione");
+
         String r = articoloDAO.doSell(idArticolo);
         PrintWriter writer = resp.getWriter();
         resp.setContentType("UTF-8");

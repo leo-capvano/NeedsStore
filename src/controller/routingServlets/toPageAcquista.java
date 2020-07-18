@@ -35,7 +35,9 @@ public class toPageAcquista extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/pageacquista.jsp");
             dispatcher.forward(req,resp);
         }else {
-            //error articolo non trovato
+            RequestDispatcher dispatcher = req.getRequestDispatcher("homepage.jsp");
+            req.setAttribute("error","Errore nella visualizzazione della pagina, riprova :(");
+            dispatcher.forward(req,resp);
         }
 
     }

@@ -18,13 +18,16 @@ public class SellArticleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String idArticolo = req.getParameter("idArticolo");
+        ArticoloDAO articoloDAO = new ArticoloDAO();
+        Articolo articolo = articoloDAO.doRetrieveById(idArticolo);
         Utente utenteLoggato = (Utente) req.getSession().getAttribute("utenteLoggato");
-        if (utenteLoggato==null){
+        //controllo se l'utenteloggato è nullo
+        //se l'articolo che si sta vendendo appartiene a utenteloggato
+        if ((utenteLoggato==null)||(!utenteLoggato.getEmail().equals(articolo.getEmail_vend()))){
             throw new GenericException("Non sei autorizzato a visualizzare questa pagina");
         }
 
-        String idArticolo = req.getParameter("idArticolo");
-        ArticoloDAO articoloDAO = new ArticoloDAO();
         //crea oggetto vendita
         String idVendita = UUID.randomUUID().toString();
         Double prezzo = articoloDAO.doRetrieveById(idArticolo).getPrezzo();

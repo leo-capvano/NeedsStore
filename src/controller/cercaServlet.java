@@ -2,8 +2,11 @@ package controller;
 
 
 import com.google.gson.Gson;
+import com.mysql.cj.protocol.x.Notice;
 import model.Articolo;
 import model.ArticoloDAO;
+import model.GenericException;
+import model.Utente;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,12 +23,14 @@ public class cercaServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String written = req.getParameter("written");
         ArrayList<Articolo> articoli = articoloDAO.doRetrieveByTitolo(written, 10);
         if (articoli.size()<=0){
-            //non è stato trovato nulla
+            //non è stato trovato nulla, restituisco IDLE
             articoli.add(new Articolo("empty","empty","empty","empty",1.0,"empty","empty"));
         }
+        //converto lista di articoli in json e la restituisco
         String json = new Gson().toJson(articoli);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class LoadAlbum extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //carica l'album di foto di un dato idArticolo
 
         //idArticolo
         String idArticolo = req.getParameter("idArticolo");

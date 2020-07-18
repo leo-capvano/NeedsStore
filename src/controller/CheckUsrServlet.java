@@ -16,6 +16,9 @@ import java.io.PrintWriter;
 public class CheckUsrServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //ricevo email e pwd e controllo se sono corrette
+        //se si => ok altrimenti => not ok
+
         String email = req.getParameter("email");
         String pwd = req.getParameter("pwd");
 

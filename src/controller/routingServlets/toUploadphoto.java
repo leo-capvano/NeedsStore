@@ -31,6 +31,11 @@ public class toUploadphoto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        Utente utenteLoggato = (Utente) req.getSession().getAttribute("utenteLoggato");
+        if (utenteLoggato==null){
+            throw new GenericException("Non sei autorizzato a visualizzare questa pagina!");
+        }
+
         String idArticolo = UUID.randomUUID().toString();
 
         String titolo = req.getParameter("titolo");
@@ -49,7 +54,7 @@ public class toUploadphoto extends HttpServlet {
         //non necessario
         Double prezzo = Double.parseDouble(req.getParameter("prezzo"));
 
-        Utente utenteLoggato = (Utente) req.getSession().getAttribute("utenteLoggato");
+
         String email_vend = utenteLoggato.getEmail();
         LocalDate data_inserimento = LocalDate.now();
         Articolo newArticolo = new Articolo(idArticolo,titolo,descrizione,email_vend,prezzo,luogo,data_inserimento.toString());
