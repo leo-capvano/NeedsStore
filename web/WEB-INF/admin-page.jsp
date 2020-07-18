@@ -45,6 +45,8 @@
             type: "GET",
             data: {btnGetVendite:"btnGetVendite"},
             success: function (results) {
+                venditeF.innerHTML="";
+                utentiF.innerHTML="";
                 console.log(results);
                 venditeF.style.visibility="visible";
                 var vendite = results;
@@ -78,9 +80,12 @@
             type: "GET",
             data: {btnGetUsers:"btnGetUsers"},
             success: function (results) {
+                utentiF.innerHTML="";
+                venditeF.innerHTML="";
+                utentiF.style.visibility="visible";
                 var utenti = results;
                 for (i=0; i<utenti.length; i++){
-                    //console.log(utenti[i].email)
+                    console.log(utenti[i].email)
                     var utente = document.createElement("div");
                     utente.className = "rowDivStart";
                     var formF = document.createElement("form");

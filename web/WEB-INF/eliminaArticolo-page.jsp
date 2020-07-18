@@ -83,8 +83,9 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState==4 && xhr.status==200){
                     console.log(xhr.responseText)
-                    if (xhr.responseText == "1"){
-                        alert("Articolo eliminato correttamente!")
+                    if (xhr.responseText == "si"){
+                        alert("Articolo eliminato correttamente!");
+                        window.location.href="homepage.jsp";
                     }else{
                         div_error.style.visibility = "visible";
                         div_error.style.opacity = 1;

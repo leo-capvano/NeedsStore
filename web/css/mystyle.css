@@ -368,7 +368,7 @@ a.prec, a.succ {
     #toggle:checked + .menu{
         visibility: visible;
         opacity: 1;
-        height: 180px;
+        height: 230px;
         transition: visibility, opacity, height 1s;
     }
 
@@ -385,7 +385,6 @@ a.prec, a.succ {
     }
     .pageTitle{
         font-size: 10px;
-        margin: 10px;
     }
 
     #contatti{
@@ -409,6 +408,10 @@ a.prec, a.succ {
     .imgContainer{
         width: 250px;
         height: 250px;
+    }
+
+    .inputText{
+        width: 200px;
     }
 
 }

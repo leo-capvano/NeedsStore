@@ -43,22 +43,22 @@
 </div>
 <hr>
 
-<h3 class="chapterTitle">MODIFICA UTENTE</h3>
+<h3 class="chapterTitle mg-bottom-20 mg-left-30">MODIFICA UTENTE</h3>
 
 <div class="colDiv mg-left-30">
     <form action="editUser">
-        Modifica nome: <input type="text" name="nome">
-        <input type="hidden" name="emailUtente" value="<%=userDetail.getEmail()%>" class="inputText focusOutline">
+        <span>Modifica nome:</span> <input type="text" name="nome" class="inputText focusOutline mg-top-30">
+        <input type="hidden" name="emailUtente" value="<%=userDetail.getEmail()%>">
         <button type="submit" class="btnGo">Modifica</button>
     </form>
     <form action="editUser">
-        Modifica cognome: <input type="text" name="cognome">
-        <input type="hidden" name="emailUtente" value="<%=userDetail.getEmail()%>" class="inputText focusOutline">
+        <span>Modifica cognome:</span> <input type="text" name="cognome" class="inputText focusOutline mg-top-30">
+        <input type="hidden" name="emailUtente" value="<%=userDetail.getEmail()%>">
         <button type="submit" class="btnGo">Modifica</button>
     </form>
     <form action="editUser">
-        Modifica numero di telefono: <input type="number" name="telefono">
-        <input type="hidden" name="emailUtente" value="<%=userDetail.getEmail()%>" class="inputText focusOutline">
+        <span>Modifica numero di telefono:</span> <input type="number" name="telefono" class="inputText focusOutline mg-top-30">
+        <input type="hidden" name="emailUtente" value="<%=userDetail.getEmail()%>">
         <button type="submit" class="btnGo">Modifica</button>
     </form>
 </div>

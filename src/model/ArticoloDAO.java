@@ -82,7 +82,7 @@ public class ArticoloDAO {
             ResultSet r = statement.executeQuery();
             while (r.next()){
                 articoli.add(new Articolo(r.getString(1),r.getString(2),r.getString(3),
-                        r.getString(4),r.getDouble(5),r.getString(6),r.getString(7)));
+                        r.getString(4),r.getDouble(5),r.getString(6),r.getString(7),r.getBoolean(8)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,7 +122,7 @@ public class ArticoloDAO {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                     articoli.add(new Articolo(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),
-                            resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6),resultSet.getString(7)));
+                            resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6),resultSet.getString(7),resultSet.getBoolean(8)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -139,7 +139,7 @@ public class ArticoloDAO {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 a = new Articolo(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),
-                        resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6), resultSet.getString(7));
+                        resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6), resultSet.getString(7),resultSet.getBoolean(8));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,7 +155,8 @@ public class ArticoloDAO {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 articoli.add(new Articolo(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3),
-                        resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6),resultSet.getString(7)));
+                        resultSet.getString(4),resultSet.getDouble(5),resultSet.getString(6),resultSet.getString(7),resultSet.getBoolean(8)));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

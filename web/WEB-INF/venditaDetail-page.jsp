@@ -11,6 +11,8 @@
 <html>
 <head>
     <title>Dettagli Vendita</title>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+    <link rel="stylesheet" type="text/css" href="css/secondaryStyle.css">
 </head>
 <body>
 <%
@@ -37,7 +39,7 @@
     Articolo Venduto
 </h3>
 <div class="colDiv">
-    <div class="galleryPic centerDiv" id="galleryPic">
+    <div class="galleryPic centerDiv imgContainer" id="galleryPic">
         <%if(album!=null){
             for(int i =0; i<album.size(); i++){%>
         <div class="pics fade">
@@ -57,7 +59,7 @@
     </div>
 
     <h3 class="separatorTitle mg-left-30 zindex1"><p>Informazioni sull'articolo</p></h3>
-    <div style="border-radius: 7px; background-color: rgba(152,222,136,0.85); z-index: 0;">
+    <div class="centerDiv" style="border-radius: 7px; background-color: rgba(152,222,136,0.85); z-index: 0;">
         <div class="rowDiv centerDiv baseline wrap mg-bottom-20 zindex0" id="infoArt">
             <div class="rowDiv mg-top-30">
                 <div class="colDiv centerDiv">
