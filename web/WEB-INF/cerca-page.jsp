@@ -68,12 +68,16 @@
     }
 
     function cerca() {
+        //recupera il titolo da cercare
         var written = document.getElementById("titoloAnnuncio").value;
 
         //rimuovi vecchi risultati di ricerca
         var container = document.getElementById("containerForResults")
         container.innerHTML = "";
 
+        //invia il titolo ad una servlet con ajax e ricevi un risultato
+        //contenente tutti gli articoli con titolo che matchano con la
+        //stringa inserita nel campo di testo
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(){
           if (xhr.readyState==4 && xhr.status==200){

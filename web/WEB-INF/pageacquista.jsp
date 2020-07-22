@@ -42,11 +42,11 @@
 </div>
 
 <div class="colDiv">
-    <div class="galleryPic centerDiv imgContainer" id="galleryPic">
+    <div class="galleryPic centerDiv" id="galleryPic">
         <%if(album!=null){
             for(int i =0; i<album.size(); i++){%>
                 <div class="pics fade">
-                    <img src="<%=album.get(i).getPath()%>" style="width: 450px;height: 400px;overflow: hidden;position: relative;background: rgb(107,149,149);margin: 10px 0;">
+                    <img src="<%=album.get(i).getPath()%>" class="imgContainer">
                 </div>
             <%}%>
         <%}else{%>
@@ -84,7 +84,7 @@
             </div>
             <div class="rowDiv mg-top-30">
                 <button class="btnGo" id="contattaEmail" onclick="emailcontact()">Invia una e-mail</button>
-                <p id="email" class="mg-left-30"><%=venditore.getEmail()%></p>
+                <p id="email" class="mg-left-30" style="visibility: hidden;"><%=venditore.getEmail()%></p>
             </div>
         </div>
     </div>

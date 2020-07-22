@@ -53,6 +53,7 @@ public class AdminPageServlet extends HttpServlet {
             //è stato premuto il btnGetVendite => carichiamo e restituiamo tutte le vendite nel db
             ArticoloDAO articoloDAO = new ArticoloDAO();
             ArrayList<Articolo> articoliVenduti = articoloDAO.doRetrieveSold();
+
             String articoliJson = new Gson().toJson(articoliVenduti);
 
             resp.setContentType("application/json");
