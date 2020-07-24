@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page errorPage="/errorPage.jsp" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Carca Annunci</title>
@@ -31,6 +32,11 @@
     <div class="centerDiv mg-top-30">
         <input type="text" id="titoloAnnuncio" class="inputText focusOutline" name="titoloAnnuncio" placeholder="Titolo annuncio" onkeypress="cerca()">
         <button type="button" name="btnCerca" class="btnGo" onclick="cerca()">Cerca</button>
+        <c:forEach items="${categorie}" var="categoria">
+            <div onclick="checkCategoria(this)" style="margin: 10px;cursor: pointer;">${categoria.nome}
+                <input type="checkbox" checked name="boxCategorie" value="${categoria.nome}" style="cursor: pointer;">
+            </div>
+        </c:forEach>
     </div>
 
     <div id="containerForResults" class="colDiv">
@@ -38,6 +44,17 @@
     </div>
 </body>
 <script>
+
+    //funzione che simula il click alla checkbox
+    //ricevendo un click dal div che la contiene
+    function checkCategoria(divPadre) {
+        var inputFiglio = divPadre.childNodes[1];
+        if (inputFiglio.checked == true){
+            inputFiglio.checked = false;
+        }else{
+            inputFiglio.checked = true;
+        }
+    }
 
     function articoloNotFound() {
         container = document.getElementById("containerForResults")
@@ -94,7 +111,12 @@
               }
           }
         };
-        xhr.open("get","cercaServlet?written="+written,true);
+        var categorie = document.getElementsByName("boxCategorie");
+        var urlString = "cercaServlet?written="+written;
+        for (i=0; i<categorie.length; i++){
+            urlString += "&"+categorie[i].value+"="+categorie[i].checked;
+        }
+        xhr.open("get",urlString,true);
         xhr.send();
 
     }

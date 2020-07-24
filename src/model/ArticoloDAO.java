@@ -90,6 +90,23 @@ public class ArticoloDAO {
         return articoli;
     }
 
+    public ArrayList<Articolo> doRetrieveByTitoloCat(String titolo, int limit){
+        ArrayList<Articolo> articoli = new ArrayList<>();
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement statement = conn.prepareStatement("select * from articoli where venduto = 0" +
+                    " and titolo like '"+titolo+"%' order by data_inserimento desc limit "+limit);
+            ResultSet r = statement.executeQuery();
+            while (r.next()){
+                articoli.add(new Articolo(r.getString(1),r.getString(2),r.getString(3),
+                        r.getString(4),r.getDouble(5),r.getString(6),r.getString(7),r.getBoolean(8)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return articoli;
+    }
+
 
     public void doPublish(Articolo a){
         try {
