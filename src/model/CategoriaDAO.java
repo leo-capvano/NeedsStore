@@ -38,4 +38,36 @@ public class CategoriaDAO {
         }
         return c;
     }
+
+    public Categoria doRetrieveByNome(String nome){
+        Categoria c = null;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select * from categorie" +
+                    " where nome = ?");
+            statement.setString(1,nome);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                c = new Categoria(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return c;
+    }
+
+    public int doInsert(String nome, String descrizione) {
+        int r = 0;
+        try {
+            Connection connection = ConPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement("insert into categorie(nome,descrizione)" +
+                    " values(?,?)");
+            statement.setString(1,nome);
+            statement.setString(2,descrizione);
+            r = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return r;
+    }
 }

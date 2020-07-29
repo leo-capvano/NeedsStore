@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page errorPage="/errorPage.jsp" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Admin Page</title>
@@ -25,6 +27,7 @@
 <div clas="rowDiv">
     <button class="btnGo" id="shawUsers" onclick="shawUsers()">Utenti</button>
     <button class="btnGo" id="shawVendite" onclick="shawVendite()">Vendite</button>
+    <button class="btnGo" id="shawCategorie" onclick="shawCategorie()">Categorie</button>
 </div>
 
 <div class="colDiv mg-top-30" style="visibility: hidden;cursor: pointer; background: #8fd19e; padding: 10px; border-radius: 5px;" id="utenti">
@@ -33,10 +36,32 @@
 <div class="colDiv mg-top-30" style="visibility: hidden;cursor: pointer; background: coral; padding: 10px; border-radius: 5px;" id="vendite">
 </div>
 
+<div class="colDiv mg-top-30" style="cursor: pointer; background: rgba(86,130,204,0.85); padding: 10px; border-radius: 5px;" id="categorie">
+    <button onclick="addCat()" class="btnGoSecondary mg-bottom-20">Aggiungi una categoria</button>
+    <form action="adminPage" style="display: none;" id="formAddCat">
+        <div class="rowDiv wrap">
+            <span class="mg-right-30">Nome categoria: </span><input class="inputText" type="text" name="nome" id="nomeCat"><br>
+        </div>
+        <div class="rowDiv wrap">
+            <span class="mg-right-30">Breve descrizione: </span><textarea class="inputText" name="descrizione" rows="5" cols="20"></textarea>
+        </div>
+        <div class="rowDiv wrap">
+            <button type="submit" name="btnAddCat" value="btnAddCat" class="btnGo">Aggiungi</button>
+        </div>
+    </form>
+    <h2 class="chapterTitle">CATEGORIE:</h2>
+    <c:forEach items="${categorie}" var="categoria">
+        <div class="rowDivStart">
+            <span class="mg-right-30">${categoria.nome}</span>
+        </div>
+    </c:forEach>
+</div>
+
 <script>
 
     var utentiF = document.getElementById("utenti");
     var venditeF = document.getElementById("vendite");
+    var categorieF = document.getElementById("categorie");
 
     //funzione che visulaizza tutte le vendute effettuate
     function shawVendite() {
@@ -45,8 +70,8 @@
             type: "GET",
             data: {btnGetVendite:"btnGetVendite"},
             success: function (results) {
-                venditeF.innerHTML="";
                 utentiF.innerHTML="";
+                venditeF.innerHTML="";
                 console.log(results);
                 venditeF.style.visibility="visible";
                 var vendite = results;
@@ -106,6 +131,22 @@
             }
         })
     }
+
+    //funzione che restituisce la lista di categorie a video
+    function shawCategorie() {
+        $("#categorie").css("visibility","visible");
+    }
+
+    //funzione che mostra a schermo dei campi di testo per l'aggiunta di una
+    //nuova categoria di articoli
+    function addCat() {
+        if (document.getElementById("formAddCat").style.display=="none"){
+            document.getElementById("formAddCat").style.display="block";
+        }else{
+            document.getElementById("formAddCat").style.display="none";
+        }
+    }
+
 
 </script>
 

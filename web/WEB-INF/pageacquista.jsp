@@ -1,9 +1,6 @@
-<%@ page import="model.Articolo" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Album" %>
-<%@ page import="model.Utente" %>
-<%@ page import="model.UtenteDAO" %>
-<%@ page import="java.util.HashMap" %><%--
+<%@ page import="java.util.HashMap" %>
+<%@ page import="model.*" %><%--
   Created by IntelliJ IDEA.
   User: leoca
   Date: 12/04/2020
@@ -29,6 +26,15 @@
     Utente venditore = udao.doRetrieveByEmail(articolo.getEmail_vend());
     HashMap<String,String> preferiti = (HashMap<String, String>) session.getAttribute("preferiti");
     Utente utenteLoggato = (Utente) session.getAttribute("utenteLoggato");
+    CategoriaDAO categoriaDAO = new CategoriaDAO();
+    ArticoloCategoriaDAO articoloCategoriaDAO = new ArticoloCategoriaDAO();
+    //recupero le categorie di questo articolo
+    ArrayList<ArticoloCategoria> articoloCategorie = articoloCategoriaDAO.doRetrieveByIdArticolo(articolo.getIdArticolo());
+    ArrayList<Categoria> categorie = new ArrayList<>();
+    for (ArticoloCategoria a: articoloCategorie){
+        categorie.add(categoriaDAO.doRetrieveById(a.getIdCategoria()));
+    }
+    pageContext.setAttribute("categorieCorrenti", categorie);
 %>
 
 <%if(utenteLoggato!=null){%>
@@ -39,6 +45,12 @@
 
 <div class="pageTitle">
     <h1 style="margin-bottom: 50px; text-transform: uppercase;"><c:if test="${articolo.venduto==false}">ACQUISTA</c:if> <%=articolo.getTitolo()%></h1>
+</div>
+
+<div class="rowDivStart wrap">
+    <c:forEach items="${categorieCorrenti}" var="categoria">
+        <span style="display: block; background-color: rgba(184,180,185,0.85); border-radius: 15px;padding: 10px;">${categoria.nome}</span>
+    </c:forEach>
 </div>
 
 <div class="colDiv">

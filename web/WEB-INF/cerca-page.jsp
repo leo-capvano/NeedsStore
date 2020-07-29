@@ -29,12 +29,17 @@
         <h3 align="center">CERCA ANNUNCI</h3>
     </div>
 
-    <div class="centerDiv mg-top-30">
+    <div class="centerDiv mg-top-30 wrap" id="divSelezioneCategoria">
         <input type="text" id="titoloAnnuncio" class="inputText focusOutline" name="titoloAnnuncio" placeholder="Titolo annuncio" onkeypress="cerca()">
         <button type="button" name="btnCerca" class="btnGo" onclick="cerca()">Cerca</button>
+    </div>
+    <div class="centerDiv mg-top-30 mg-bottom-20 wrap">
         <c:forEach items="${categorie}" var="categoria">
-            <div onclick="checkCategoria(this)" style="margin: 10px;cursor: pointer;">${categoria.nome}
-                <input type="checkbox" checked name="boxCategorie" value="${categoria.nome}" style="cursor: pointer;">
+            <div class="colDiv">
+                <div style="margin: 10px;cursor: pointer;">${categoria.nome}
+                    <input type="checkbox" checked="false" name="boxCategorie" value="${categoria.nome}" style="cursor: pointer;margin: 10px;">
+                </div>
+                <button onclick="cercaByCat(this)" value="${categoria.nome}" class="btnGo m10">Articoli ${categoria.nome}</button>
             </div>
         </c:forEach>
     </div>
@@ -45,16 +50,35 @@
 </body>
 <script>
 
-    //funzione che simula il click alla checkbox
-    //ricevendo un click dal div che la contiene
-    function checkCategoria(divPadre) {
-        var inputFiglio = divPadre.childNodes[1];
-        if (inputFiglio.checked == true){
-            inputFiglio.checked = false;
-        }else{
-            inputFiglio.checked = true;
+    //funzione che restituisce tutti gli articoli di
+    //una data categoria. Richiama una servlet che filtra tutti gli articoli
+    //e restituisce solo quelli di una categoria indicata
+    function cercaByCat(btn) {
+        //rimuovi vecchi risultati di ricerca
+        var container = document.getElementById("containerForResults")
+        container.innerHTML = "";
+
+        var cat = btn.value;
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState==4 && xhr.status==200){
+                //get response text
+                var articoli = JSON.parse(xhr.responseText);
+                //alert(resp[0].titolo)
+                if (articoli[0].idArticolo=="empty"){
+                    articoloNotFound()
+                }else{
+                    for(i=0; i<articoli.length; i++){
+                        loadIntoPage(articoli[i])
+                    }
+                }
+            }
         }
+        xhr.open("GET","cercaByCat?cat="+cat,true);
+        xhr.send();
+
     }
+
 
     function articoloNotFound() {
         container = document.getElementById("containerForResults")
@@ -100,7 +124,6 @@
           if (xhr.readyState==4 && xhr.status==200){
               //get response text
               var articoli = JSON.parse(xhr.responseText);
-              console.log(articoli)
               //alert(resp[0].titolo)
               if (articoli[0].idArticolo=="empty"){
                   articoloNotFound()

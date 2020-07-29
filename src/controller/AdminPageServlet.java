@@ -62,6 +62,22 @@ public class AdminPageServlet extends HttpServlet {
             writer.write(articoliJson);
             writer.flush();
             writer.close();
+        }else if (req.getParameter("btnAddCat")!=null){
+            //è statop premuto il pulsante addCat => aggiungi una categoria al db
+            String nome = req.getParameter("nome");
+            String descrizione = req.getParameter("descrizione");
+
+            CategoriaDAO categoriaDAO = new CategoriaDAO();
+            int r = categoriaDAO.doInsert(nome, descrizione);
+            if (r<=0){
+                throw new GenericException("errore nell'aggiunta di una categoria, assicurati che il nome sia unico! :(");
+            }
+            ArrayList<Categoria> categorie = (ArrayList<Categoria>)getServletContext().getAttribute("categorie");
+            categorie.add(categoriaDAO.doRetrieveByNome(nome));
+            getServletContext().setAttribute("categorie",categorie);
+
+            RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/admin-page.jsp");
+            dispatcher.forward(req,resp);
         }
 
 

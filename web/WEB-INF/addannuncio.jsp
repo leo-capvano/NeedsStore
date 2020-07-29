@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page errorPage="/errorPage.jsp" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 
 <html>
 <head>
@@ -18,6 +20,7 @@
 <body>
 
 <jsp:include page="headerLogged.jsp"></jsp:include>
+
 
 <div class="pageTitle">
     <h1 style="margin-bottom: 30px;">Inserisci un annuncio</h1>
@@ -34,6 +37,11 @@
                 <input type="text" class="inputText focusOutline" id="titolo" name="titolo" placeholder="titolo">
                 <textarea class="inputText focusOutline" rows="5" name="descrizione" placeholder="Descrizione dell'annuncio"></textarea>
             </div>
+        </div>
+        <div class="rowDiv wrap" id="divSelezioneCategoria">
+            <c:forEach items="${categorie}" var="categoria">
+                ${categoria.nome}<input type="checkbox" checked name="boxCategorie" value="${categoria.nome}" style="margin-right: 20px;margin-bottom: 10px;cursor: pointer;">
+            </c:forEach>
         </div>
 
         <div class="rowDiv wrap mg-bottom-20">
@@ -62,6 +70,7 @@ div_error.style.transition = "visibility, opacity 500ms"
 
 //validazione generale di tutti i campi
 function validation() {
+
     var titolo = document.getElementById("titolo")
     if (titolo.value==""){
         titolo.style.borderColor = "red";
@@ -79,6 +88,16 @@ function validation() {
         }else {
             titolo.style.borderColor = "green";
         }
+    }
+
+    var selectCategorie = document.getElementsByName("boxCategorie");
+    if (validateCategorie(selectCategorie)){
+
+    }else{
+        div_error.style.visibility = "visible";
+        div_error.style.opacity = 1;
+        error_message.innerText = "Seleziona almeno una categoria per il tuo annuncio"
+        return;
     }
 
     var luogo = document.getElementById("luogo");
@@ -125,6 +144,8 @@ function validation() {
             prezzo.style.borderColor = "green";
         }
     }
+
+
     document.getElementById("addAnnuncioForm").submit();
 }
 
@@ -142,6 +163,15 @@ function suggerisciLuogo() {
             }
         }
     })
+}
+
+function validateCategorie(s){
+    ok = false;
+    for (i=0; i<s.length; i++){
+        if (s[i].checked==true)
+            ok=true;
+    }
+    return ok;
 }
 
 //click sull'option della select

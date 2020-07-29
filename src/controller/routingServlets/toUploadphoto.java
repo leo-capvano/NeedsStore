@@ -4,9 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import model.Articolo;
-import model.GenericException;
-import model.Utente;
+import model.*;
 import netscape.javascript.JSObject;
 
 import javax.servlet.RequestDispatcher;
@@ -21,6 +19,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -59,9 +58,13 @@ public class toUploadphoto extends HttpServlet {
         LocalDate data_inserimento = LocalDate.now();
         Articolo newArticolo = new Articolo(idArticolo,titolo,descrizione,email_vend,prezzo,luogo,data_inserimento.toString());
 
+        //recupera le categorie scelte per l'articolo
+        String[] checkbox = req.getParameterValues("boxCategorie");
+
         HttpSession session = req.getSession();
         synchronized (session){
             session.setAttribute("newArticolo",newArticolo);
+            session.setAttribute("categorieArticolo", checkbox);
         }
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/uploadphoto.jsp");

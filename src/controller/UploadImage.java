@@ -67,11 +67,19 @@ public class UploadImage extends HttpServlet {
             }
         }
 
-        Articolo newArticolo = (Articolo) req.getSession().getAttribute("newArticolo");
-
         //scrivi l'articolo nel db
+        Articolo newArticolo = (Articolo) req.getSession().getAttribute("newArticolo");
         ArticoloDAO ardao = new ArticoloDAO();
         ardao.doPublish(newArticolo);
+
+        //registra le categorie del newArticolo
+        String[] checkbox = (String[])req.getSession().getAttribute("categorieArticolo");
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        ArticoloCategoriaDAO articoloCategoriaDAO = new ArticoloCategoriaDAO();
+        for (int i=0; i<checkbox.length; i++){
+            Categoria c = categoriaDAO.doRetrieveByNome(checkbox[i]);
+            articoloCategoriaDAO.doInsert(newArticolo.getIdArticolo(), c.getIdCategoria());
+        }
 
         //creare e scrivere tanti album per quanti sono gli items(foto caricate)
         for (int i=0; i<filenames.size(); i++){
